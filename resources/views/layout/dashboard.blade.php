@@ -4,6 +4,7 @@
         .main_content {
             padding-left: 283px;
             padding-bottom: 0% !important;
+            padding-right: 12px;
         }
     </style>
 @endsection
@@ -15,6 +16,11 @@
                     <div class="quick_activity">
                         <div class="row">
                             <div class="col-12">
+                                @if (Session::has('login_message'))
+                                    <div id="loginMessage" class="alert alert-success">
+                                        {{ Session::get('login_message') }}
+                                    </div>
+                                @endif
                                 <div class="quick_activity_wrap">
                                     <div class="single_quick_activity">
                                         <h4>User
@@ -80,4 +86,16 @@
             </div>
         </div>
     </section>
+@endsection
+@section('script-area')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var loginMessage = document.getElementById('loginMessage');
+            if (loginMessage) {
+                setTimeout(function() {
+                    loginMessage.style.display = 'none';
+                }, 3000);
+            }
+        });
+    </script>
 @endsection

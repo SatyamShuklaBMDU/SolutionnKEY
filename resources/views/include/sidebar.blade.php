@@ -46,7 +46,7 @@
                 </ul>
             <li class>
                 <a class="has-arrow" href="#" aria-expanded="false">
-                    <i class="fa fa-portrait" style="color: #033496;"></i>
+                    <i class="fa fa-users" style="color: #033496;"></i>
                     <span style="font-size: 13px; color: #033496"><b>Customer Management</b></span>
                 </a>
                 <ul>
@@ -80,7 +80,7 @@
             </li>
             <li>
                 <a href="#">
-                    <i class="fa fa-arrows-alt-h" style="color: #033496;"></i>
+                    <i class="fa fa-arrows" style="color: #033496;"></i>
                     <span style="font-size: 14px;color: #033496"><b>Analytics & Reporting</b></span>
                 </a>
             </li>

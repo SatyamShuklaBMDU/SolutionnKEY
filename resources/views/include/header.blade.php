@@ -27,7 +27,15 @@
                 <p>Welcome Admin!</p>
                 <h5>Solutions key</h5>
                 <div class="profile_info_details">
-                    <a href="#">Log Out <i class="ti-shift-left"></i></a>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <x-dropdown-link :href="route('logout')"
+                            onclick="event.preventDefault();
+                                            this.closest('form').submit();">
+                            {{ __('Log Out') }}
+                        </x-dropdown-link>
+                        <i class="ti-shift-left"></i>
+                    </form>
                 </div>
             </div>
         </div>

@@ -10,7 +10,7 @@
         </div>
         <ul id="sidebar_menu">
             <li class="mm-active">
-                <a href="#">
+                <a href="{{route('dashboard')}}">
                     <div class="icon">
                         <i class="fa fa-home" style="color:#033496;"></i>
                     </div>
@@ -50,7 +50,7 @@
                     <span style="font-size: 13px; color: #033496"><b>Customer Management</b></span>
                 </a>
                 <ul>
-                    <li><a href="customer.html"><span style="color: #033496;"> Details</span></a></li>
+                    <li><a href="{{route('customer-show')}}"><span style="color: #033496;"> Details</span></a></li>
                 </ul>
             </li>
             <li class>

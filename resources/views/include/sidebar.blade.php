@@ -23,7 +23,7 @@
                     <span style="font-size: 15px; color: #033496"><b>User Management</b></span>
                 </a>
                 <ul>
-                    <li><a href="user.html"><span style="color: #033496;"> Accounts</span></a></li>
+                    <li><a href="{{ route('users') }} "><span style="color: #033496;"> Accounts</span></a></li>
                 </ul>
             </li>
             <li class>

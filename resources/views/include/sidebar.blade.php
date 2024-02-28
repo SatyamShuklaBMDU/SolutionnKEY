@@ -97,19 +97,13 @@
             @endif
             @if(auth()->check() && auth()->user()->hasPermission('complaint'))
             <li>
-                <a href="#">
-                    <i class="fa fa-exclamation" style="color: #033496;"></i>
-                    <span style="font-size: 14px;color: #033496"><b>Complaint</b></span>
-                </a>
-            </li>
-            @endif
-            @if(auth()->check() && auth()->user()->hasPermission('analytic'))
-            <li>
                 <a href="{{ route('complaint') }}">
                     <i class="fa fa-exclamation" style="color: #033496;"></i>
                     <span style="font-size: 14px;color: #033496"><b>Complaints</b></span>
                 </a>
             </li>
+            @endif
+            @if(auth()->check() && auth()->user()->hasPermission('analytic'))
             <li>
                 <a href="#">
                     <i class="fa fa-arrows" style="color: #033496;"></i>

@@ -44,10 +44,15 @@ Route::middleware('auth')->group(function () {
     Route::post('/change-account-status', [CustomerController::class,'changeAccountStatus'])->name('change.account.status');
     Route::post('/customer/filter',[CustomerController::class,'filter'])->name('customer-filter');
     Route::delete('/delete-customer/{id}', [CustomerController::class, 'destroy'])->name('delete-customer');
+
     // FeedBack Route
     Route::get('/feedback', [FeedbackController::class, 'index'])->name('feedback');
+    Route::delete('/delete-feedback/{id}', [CustomerController::class, 'destroy'])->name('delete-feedback');
+    
     // Complaint Route
     Route::get('/complaint', [ComplaintController::class, 'index'])->name('complaint');
+    Route::delete('/delete-complaint/{id}', [CustomerController::class, 'destroy'])->name('delete-feedback');
+
 });
 
 require __DIR__.'/auth.php';

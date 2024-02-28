@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -31,6 +32,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/user', [UserController::class, 'user'])->name('users');
     Route::post('/user-store', [UserController::class, 'user_store'])->name('users-store');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/customer/show',[CustomerController::class,'show'])->name('customer-show');
+    Route::post('/customer/filter',[CustomerController::class,'filter'])->name('customer-filter');
+    Route::delete('/delete-customer/{id}', [CustomerController::class, 'destroy'])->name('delete-customer');
+
 });
 
 require __DIR__.'/auth.php';

@@ -22,7 +22,6 @@ class UserController extends Controller
             'role' => 'required|in:admin,user',
             'password' => 'required|min:6'
         ]);
-
         if ($validator->passes()) {
             $user = new User();
             $user->name = $request->name;

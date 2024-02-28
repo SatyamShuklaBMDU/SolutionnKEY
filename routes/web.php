@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -35,6 +37,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/customer/show',[CustomerController::class,'show'])->name('customer-show');
     Route::post('/customer/filter',[CustomerController::class,'filter'])->name('customer-filter');
     Route::delete('/delete-customer/{id}', [CustomerController::class, 'destroy'])->name('delete-customer');
+
+    // FeedBack Route
+    Route::get('/feedback', [FeedbackController::class, 'index'])->name('feedback');
+    
+    // Complaint Route
+    Route::get('/complaint', [ComplaintController::class, 'index'])->name('complaint');
 
 });
 

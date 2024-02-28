@@ -73,9 +73,15 @@
                 </ul>
             </li>
             <li>
-                <a href="#">
+                <a href="{{ route('feedback') }}">
                     <i class="fa fa-exclamation" style="color: #033496;"></i>
                     <span style="font-size: 14px;color: #033496"><b>Feedback & Reviews</b></span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('complaint') }}">
+                    <i class="fa fa-exclamation" style="color: #033496;"></i>
+                    <span style="font-size: 14px;color: #033496"><b>Complaints</b></span>
                 </a>
             </li>
             <li>

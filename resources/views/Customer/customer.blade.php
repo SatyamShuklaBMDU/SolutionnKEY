@@ -52,7 +52,6 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
 @endsection
-
 @section('content-area')
     <section class="main_content dashboard_part">
         <nav aria-label="breadcrumb" class="mb-5">

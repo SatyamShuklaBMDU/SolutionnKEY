@@ -22,3 +22,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/customer/register', [CustomerController::class,'register']);
 Route::post('/customer/update', [CustomerController::class,'update']);
 Route::post('/customer/feedback', [FeedbackController::class,'addfeedback']);
+Route::post('/customer/complaint', [FeedbackController::class,'addcomplaint']);

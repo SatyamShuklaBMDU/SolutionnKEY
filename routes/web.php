@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
     });
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/customer/show',[CustomerController::class,'show'])->name('customer-show');
+    Route::post('/change-account-status', [CustomerController::class,'changeAccountStatus'])->name('change.account.status');
     Route::post('/customer/filter',[CustomerController::class,'filter'])->name('customer-filter');
     Route::delete('/delete-customer/{id}', [CustomerController::class, 'destroy'])->name('delete-customer');
     // FeedBack Route

@@ -38,7 +38,7 @@
                     <span style="font-size: 13px;color: #033496;"><b>Service Management</b></span>
                 </a>
                 <ul>
-                    <li><a href="service.html"><span style="color: #033496;"> Services</span></a></li>
+                    <li><a href="service.html"><span style="color: #033496;">Services</span></a></li>
                 </ul>
             </li>
             @endif
@@ -49,7 +49,7 @@
                     <span style="font-size: 12px; color: #033496"><b>Professional Management</b></span>
                 </a>
                 <ul>
-                    <li><a href="pr.html"><span style="color: #033496;"> Professionals</span></a></li>
+                    <li><a href="pr.html"><span style="color: #033496;">Professionals</span></a></li>
                 </ul>
             </li>
             @endif

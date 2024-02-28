@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/user', [UserController::class, 'user'])->name('users');
+    Route::post('/user-store', [UserController::class, 'user_store'])->name('users-store');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/customer/show',[CustomerController::class,'show'])->name('customer-show');
     Route::post('/customer/filter',[CustomerController::class,'filter'])->name('customer-filter');

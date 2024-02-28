@@ -418,7 +418,6 @@
             <div class="container-fluid plr_30 body_white_bg pt_30">
                 <div class="row justify-content-center">
                     <div class="col-lg-12 ">
-                        @include('include.message');
                         <div class="row mb" style="margin-bottom: 30px; margin-left: 5px;">
                             <div class="col-sm-1">
                                 <p class="text-dark">
@@ -559,15 +558,10 @@
                                                 <button type="submit" class="btn btn-primary">Submit</button>
                                             </form>
                                         </div>
-
-                                        <!-- Modal footer -->
-                                        {{-- <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-        </div> --}}
-
                                     </div>
                                 </div>
                             </div>
+                            {{-- the end MOdal --}}
 
                             <div class="card-body" style="overflow: scroll;">
                                 <div id="example-wrapper" class="dataTables_wrapper no-footer">
@@ -744,7 +738,6 @@
                                                     </table>
                                                 </div>
                                             </div>
-
                                         </div>
                             </div>
                         </div>
@@ -762,4 +755,7 @@
     </section>
     {{-- section content  end --}}
 @endsection
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+

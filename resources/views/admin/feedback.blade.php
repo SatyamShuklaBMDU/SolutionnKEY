@@ -1,153 +1,226 @@
 @extends('include.master')
+
 @section('style-area')
     <style>
         .main_content {
             padding-left: 283px;
             padding-bottom: 0% !important;
+            margin: 0px !important;
+        }
+
+        .breadcrumb {
+            font-size: 18px !important;
+            background-color: transparent;
+            margin-bottom: 0;
+            padding: 10px 0;
+        }
+
+        .notification-form {
+            padding: 12px;
+            margin: 14px 0px 40px 0px;
+        }
+
+        .Modules {
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb-item a {
+            color: #333 !important;
+        }
+
+        .breadcrumb-item.active {
+            color: #007bff !important;
+        }
+
+        .main_content .main_content_iner {
+            margin: 0px !important;
+        }
+
+        #customerTable {
+            font-size: 16px;
+            /* Adjust the font size as needed */
+        }
+
+        .dt-button {
+            background-color: #033496 !important;
+            color: white !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            font-size: 14px;
+            padding: 5px 10px;
+            white-space: nowrap;
+        }
+
+        #customerTable_previous {
+            transform: translateX(-20px);
         }
     </style>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
 @endsection
 @section('content-area')
-    {{-- section content --}}
-
     <section class="main_content dashboard_part">
-        <div class="main_content_iner ">
+        <nav aria-label="breadcrumb" class="mb-5">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Feedback Management</a></li>
+                <li class="breadcrumb-item active" aria-current="page">All Feedback</li>
+            </ol>
+        </nav>
+        @if (session()->has('success'))
+            <div class="alert alert-success">
+                {{ session()->get('success') }}
+            </div>
+        @endif
+        <div class="main_content_iner">
             <div class="container-fluid plr_30 body_white_bg pt_30">
                 <div class="row justify-content-center">
                     <div class="col-lg-12 ">
-                        {{-- content start  --}}
-                        @if (session()->has('message'))
-    <script>
-        alert('{{ session()->get('message') }}');
-    </script>
-
-    {{ session()->forget('message') }}
-@endif
-<style>
-    .dt-button {
-        background-color: #1cc88a !important;
-        background-image: linear-gradient(180deg, #1cc88a 10%, #13855c 100%) !important;
-        background-size: cover !important;
-        color: #fff !important;
-        border: none !important;
-
-    }
-</style>
-<!-- Begin Page Content -->
-<div class="container-fluid">
-    <!-- Page Heading -->
-    <h3 class="h3 mb-2 text-gray-800">Feedback</h3>
-    <form action="{{ url('/add-feedback') }}" method="POST">
-        @csrf
-        <div class="row dashboard-header">
-            <div class="col-md-12">
-                <div class="row mt-3">
-                    <div class="col-md-12 boder-danger me-5 pe-5">
-                        <div class="row mb" style="margin-bottom: 30px;">
-                            <div class="col-sm-1">
-                                <p class="text-dark"><b><strong>Filters:</strong></b></p>
-                            </div>
-                            <div class="col-sm-3 end-date">
-                                <p class="text-dark"><strong>Date From:</strong></p>
-                                <div class="input-group date d-flex" id="datepicker1">
-                                    <input type="date" class="form-control" name="start" id="startdate"
-                                        value="{{ $start ?? '' }}" placeholder="dd-mm-yyyy" />
+                        <div class="row mb" style="margin-bottom: 30px; margin-left: 5px;">
+                            <form action="{{ route('user-filter') }}" method="post">
+                                @csrf
+                                <div class="col-sm-1">
+                                    <p class="text-dark">
+                                        <b>
+                                            <strong>Filters:</strong>
+                                        </b>
+                                    </p>
                                 </div>
-                            </div>
-                            <div class="col-sm-3 end-date">
-                                <p class="text-dark"><strong>Date to:</strong></p>
-                                <div class="input-group date d-flex" id="datepicker2">
-                                    <input type="date" name="end" class="form-control" id="enddate"
-                                        value="{{ $end ?? '' }}" placeholder="dd-mm-yyyy" />
+                                <div class="col-sm-3 end-date">
+                                    <p class="text-dark">
+                                        <strong>Date From:</strong>
+                                    </p>
+                                    <div class="input-group date d-flex">
+                                        <input type="date" class="form-control" name="start" id="datepickerFrom"
+                                            value="{{ $start ?? '' }}" placeholder="dd-mm-yyyy">
+                                    </div>
                                 </div>
+                                <div class="col-sm-3 end-date">
+                                    <p class="text-dark">
+                                        <strong>Date To:</strong>
+                                    </p>
+                                    <div class="input-group date d-flex">
+                                        <input type="date" class="form-control" name="end" id="datepickerTo"
+                                            value="{{ $end ?? '' }}" placeholder="dd-mm-yyyy">
+                                    </div>
+                                </div>
+                                <div class="col-md-1 text-end" style="margin-left: 10px; margin-top: 47px;">
+                                    <button class="btn text-white shadow-lg" type="submit"
+                                        style="background-color:#033496;">Filter</button>
+                                </div>
+                                <div class="col-md-1 text-end" style="margin-left: 10px; margin-top: 47px;">
+                                    <a class="btn text-white shadow-lg" href="{{ route('all-users') }}"
+                                        style="background-color:#033496;">Reset</a>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- Table -->
+                        <div class="card">
+                            <div class="card-body">
+                                <table id="customerTable" class="display nowrap" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>S No.</th>
+                                            <th> Date</th>
+                                            <th> Name</th>
+                                            <th>Subject</th>
+                                            <th>Message</th>
+                                            {{-- <th>User Name</th> --}}
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($feedback as $user)
+                                            <tr class="odd" data-user-id="{{ $user->id }}">
+                                                <td  class="sorting_1">{{ $loop->iteration }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($user->created_at)->format('d M,Y') }}
+                                                </td>
+                                                <td>{{ $user->customer->name }}</td>
+                                                <td>{{ $user->message }}</td>
+                                                <td>{{ $user->subject }}</td>
+                                                <td class="action">
+                                                    <button type="button" class="btn btn-outline-danger">
+                                                        <i class="fa fa-trash-o delete-location"
+                                                            style="padding-right: -10px;font-size: 17px;"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
-                            <div class="col-md-1 text-end" style="margin-left: 10px; margin-top:47px;">
-                                <button class="btn   bg-gradient-success text-white shadow-lg "
-                                    type="submit">Filter</button>
-                            </div>
-    </form>
-    <div class="col-md-1 " style="margin-left: -12px;  margin-top:47px;">
-        <a href="{{ url('/feedback') }}" class="btn bg-gradient-success text-white shadow-lg ">Reset</a>
-    </div>
-    <div class="row"></div><br><br>
-    <div class="card-body" style="width: -webkit-fill-available;">
-        <table id="example" class="display nowrap" style="width:100%">
-            <thead>
-                <tr>
-                    <th>S No.</th>
-                    <th>Create Date</th>
-                    <th>Subject</th>
-                    <th>Message</th>
-                    <th>User Name</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @php
-                    $i = 1;
-                @endphp
-                {{-- @foreach ($feedback as $feedback) --}}
-                    {{-- <tr>
-                        <td>{{ $i }}</td>
-                        <td>{{ $feedback->created_at->format('d/m/Y') }}</td>
-                        <td>{{ $feedback->subject }}</td>
-                        <td>{{ $feedback->message }}</td>
-                        <td>{{ $name[$loop->index] }}</td>
-                        <td class="text-center"><i class="fa-solid fa-trash text-danger" data-toggle="modal" data-target="#exampleModal" style="font-size:1rem; cursor: pointer;" onclick="{document.getElementById('id').value={{ $feedback->id }}}"></i></td>
-                    </tr> --}}
-                    <tr class="">
-                        <td>1</td>
-                        <td>28-02-2024</td>
-                        <td>Subject</td>
-                        <td>Message</td>
-                        <td>Action</td>
-                    </tr>
-                    @php
-                        // $i++;
-                    @endphp
-                {{-- @endforeach --}}
-                {{-- <tr>
-            </tbody>
-        </table>
-        <!--end table-->
-    </div>
-</div>
-<!-- 4-blocks row end -->
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Are you sure want to delete?
-                <form action="{{ url('/feedback/delete') }}" method="post">
-                    @csrf
-                    <input type="hidden" name="id" id="id">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<script>
-    var currentDate = new Date().toISOString().split('T')[0];
-    document.getElementById('enddate').setAttribute('max', currentDate);
-    document.getElementById('startdate').setAttribute('max', currentDate);
-</script>
-                        {{-- content start end  --}}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    {{-- section content end --}}
+@endsection
+@section('script-area')
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#alluser").click(function() {
+                $("input[type=checkbox]").prop('checked', $(this).prop('checked'));
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.delete-location').click(function(event) {
+                event.preventDefault();
+                var CustomerId = $(this).closest('tr').attr('data-customer-id');
+                if (confirm('Are you sure you want to delete this Number?')) {
+                    $.ajax({
+                        url: '/delete-feedback/' + CustomerId,
+                        type: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(response) {
+                            alert('Deleted successfully');
+                            location.reload();
+                        },
+                        error: function(xhr, status, error) {
+                            alert('Error deleting Number:', error);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#customerTable').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+        $(function() {
+            $('#datepickerFrom').datepicker({
+                format: 'dd-mm-yyyy',
+                autoclose: true,
+                todayHighlight: true,
+            });
+
+            $('#datepickerTo').datepicker({
+                format: 'dd-mm-yyyy',
+                autoclose: true,
+                todayHighlight: true,
+            });
+        });
+    </script>
 @endsection

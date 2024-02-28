@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\CustomerController;
+use App\Http\Controllers\API\FeedbackController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::post('/customer/register', [CustomerController::class,'register']);
 Route::post('/customer/update', [CustomerController::class,'update']);
+Route::post('/customer/feedback', [FeedbackController::class,'addfeedback']);

@@ -6,6 +6,7 @@ use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VendorController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -40,15 +41,20 @@ Route::middleware('auth')->group(function () {
         Route::post('/user-store', [UserController::class, 'user_store'])->name('users-store');
     });
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::middleware(['auth', 'permission:customermanagement'])->group(function () {
     Route::get('/customer/show',[CustomerController::class,'show'])->name('customer-show');
     Route::post('/change-account-status', [CustomerController::class,'changeAccountStatus'])->name('change.account.status');
     Route::post('/customer/filter',[CustomerController::class,'filter'])->name('customer-filter');
     Route::delete('/delete-customer/{id}', [CustomerController::class, 'destroy'])->name('delete-customer');
-
+    });
+    Route::middleware(['auth', 'permission:professionalmanagement'])->group(function () {
+        Route::get('/vendor/show',[VendorController::class,'show'])->name('vendor-show');
+        Route::post('/change-vendor-account-status', [VendorController::class,'changeAccountStatus'])->name('change.vendor.account.status');
+        Route::post('/vendor/filter',[VendorController::class,'filter'])->name('vendor-filter');
+    });
     // FeedBack Route
     Route::get('/feedback', [FeedbackController::class, 'index'])->name('feedback');
     Route::delete('/delete-feedback/{id}', [CustomerController::class, 'destroy'])->name('delete-feedback');
-    
     // Complaint Route
     Route::get('/complaint', [ComplaintController::class, 'index'])->name('complaint');
     Route::delete('/delete-complaint/{id}', [CustomerController::class, 'destroy'])->name('delete-feedback');

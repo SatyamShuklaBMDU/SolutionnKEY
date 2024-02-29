@@ -7,6 +7,7 @@ use App\Models\Customer;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
@@ -83,5 +84,31 @@ class CustomerController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+    public function login(Request $request)
+    {
+        try {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+            $credentials = $request->only('email', 'password');
+            if (Auth::guard('customer')->attempt($credentials)) {
+                $customer = Customer::where('email', $request->email)->firstOrFail();
+                $token = $customer->createToken('CustomerToken')->plainTextToken;
+                return response()->json(['token' => $token], 200);
+            } else {
+                throw ValidationException::withMessages([
+                    'email' => ['The provided credentials are incorrect.'],
+                ]);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 401);
+        }
+    }
+    public function logout(Request $request)
+    {
+        $request->user('customer')->tokens()->delete();
+        return response()->json(['message' => 'Successfully logged out'], 200);
     }
 }

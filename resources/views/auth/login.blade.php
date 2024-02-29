@@ -32,7 +32,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <form action="{{ route('login') }}" method="POST">
-                                            @csrf
+                                            {{ csrf_field() }}
                                             <div class>
                                                 <input type="text" class="form-control"
                                                     placeholder="Enter your email" name="email">

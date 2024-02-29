@@ -49,6 +49,7 @@
     </style>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
 @endsection
@@ -66,7 +67,7 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-12 ">
                         <div class="row mb" style="margin-bottom: 30px; margin-left: 5px;">
-                            <form action="{{route('customer-filter')}}" method="post">
+                            <form action="{{ route('customer-filter') }}" method="post">
                                 @csrf
                                 <div class="col-sm-1">
                                     <p class="text-dark">
@@ -81,7 +82,7 @@
                                     </p>
                                     <div class="input-group date d-flex">
                                         <input type="date" class="form-control" name="start" id="datepickerFrom"
-                                            value="{{$start??''}}" placeholder="dd-mm-yyyy">
+                                            value="{{ $start ?? '' }}" placeholder="dd-mm-yyyy">
                                     </div>
                                 </div>
                                 <div class="col-sm-3 end-date">
@@ -90,48 +91,73 @@
                                     </p>
                                     <div class="input-group date d-flex">
                                         <input type="date" class="form-control" name="end" id="datepickerTo"
-                                            value="{{$end??''}}" placeholder="dd-mm-yyyy">
+                                            value="{{ $end ?? '' }}" placeholder="dd-mm-yyyy">
                                     </div>
                                 </div>
                                 <div class="col-md-1 text-end" style="margin-left: 10px; margin-top: 47px;">
-                                    <button class="btn text-white shadow-lg" type="submit" style="background-color:#033496;">Filter</button>
+                                    <button class="btn text-white shadow-lg" type="submit"
+                                        style="background-color:#033496;">Filter</button>
                                 </div>
                                 <div class="col-md-1 text-end" style="margin-left: 10px; margin-top: 47px;">
-                                    <a class="btn text-white shadow-lg" href="{{route('customer-show')}}" style="background-color:#033496;">Reset</a>
+                                    <a class="btn text-white shadow-lg" href="{{ route('customer-show') }}"
+                                        style="background-color:#033496;">Reset</a>
                                 </div>
                             </form>
                         </div>
                         <!-- Table -->
                         <div class="card">
                             <div class="card-body">
-                                <table id="customerTable" class="display nowrap" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>S no.</th>
-                                            <th>Registration Date</th>
-                                            <th>Name</th>
-                                            <th>Phone number</th>
-                                            <th>Email</th>
-                                            <th>Customer Profile</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($customer as $customers)
-                                            <tr data-customer-id="{{$customers->id}}">
-                                                <td>{{ $loop->iteration }}</td>
-                                                <td>{{ date('d-m-Y', strtotime($customers->created_at)) }}</td>
-                                                <td>{{ $customers->name }}</td>
-                                                <td>{{ $customers->phone_number }}</td>
-                                                <td>{{ $customers->email }}</td>
-                                                <td><img src="{{ asset($customers->profile_pic) }}" width="100px"
-                                                        alt=""></td>
-                                                <td><i class="fa fa-trash-o delete-location" style="padding-right:-10px;font-size: 17px; color: #ea2121;"></i>
-                                                </td>
+                                <div class="table-responsive">
+                                    <table id="customerTable" class="display nowrap" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>S no.</th>
+                                                <th>Registration Date</th>
+                                                <th>Name</th>
+                                                <th>Phone number</th>
+                                                <th>Email</th>
+                                                <th>DOB</th>
+                                                <th>Gender</th>
+                                                <th>Martial Status</th>
+                                                <th>City-State</th>
+                                                <th>Customer Profile</th>
+                                                <th>Address</th>
+                                                <th>Action</th>
+                                                <th>Remark</th>
                                             </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($customer as $customers)
+                                                <tr data-customer-id="{{ $customers->id }}">
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ date('d-m-Y', strtotime($customers->created_at)) }}</td>
+                                                    <td>{{ $customers->name }}</td>
+                                                    <td>{{ $customers->phone_number }}</td>
+                                                    <td>{{ $customers->email }}</td>
+                                                    <td>{{ $customers->dob }}</td>
+                                                    <td>{{ $customers->gender }}</td>
+                                                    <td>{{ $customers->marital_status }}</td>
+                                                    <td>{{ $customers->city }}-{{ $customers->state }}</td>
+                                                    <td>{{ $customers->address }}</td>
+                                                    <td><img src="{{ asset($customers->profile_pic) }}" width="100px" alt=""></td>
+                                                    <td>
+                                                        <select class="form-select change-status-dropdown" data-customer-id="{{ $customers->id }}">
+                                                            <option value="1" {{ $customers->account_status == 1 ? 'selected' : '' }}>Activate</option>
+                                                            <option value="0" {{ $customers->account_status == 0 ? 'selected' : '' }}>Deactivate</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        @if ($customers->account_status == 0)
+                                                            {{ $customers->deactivation_remark ?? '' }}
+                                                        @else
+                                                            --
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -151,6 +177,40 @@
     <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.change-status-dropdown').change(function() {
+                var customerId = $(this).data('customer-id');
+                var newStatus = $(this).val();
+                var remark = '';
+                if (newStatus == 0) {
+                    remark = prompt("Please enter the reason for deactivation:", "");
+                    if (remark === null) {
+                        return;
+                    }
+                }
+                $.ajax({
+                    url: "{{ route('change.account.status') }}",
+                    method: 'POST',
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        customer_id: customerId,
+                        new_status: newStatus,
+                        remark: remark,
+                    },
+                    success: function(response) {
+                        alert('Account status Changed');
+                        location.reload();
+                        console.log(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
     <script>
         $(document).ready(function() {
             $('.delete-location').click(function(event) {

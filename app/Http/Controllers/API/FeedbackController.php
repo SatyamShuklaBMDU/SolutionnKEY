@@ -57,4 +57,22 @@ class FeedbackController extends Controller
             return response()->json(['message' => 'failed', 'status' => false], 200);
         }
     }
+    public function addcomplaint(Request $request)
+    {   
+        // dd($request->all());
+        $request->validate([
+            'subject' => 'required',
+            'message' => 'required',
+        ]);
+        $complaint = Complaint::create([
+            'customer_id' => $request->id,
+            'subject' => $request->subject,
+            'message' => $request->message,
+        ]);
+        if ($complaint) {
+            return response()->json(['message' => 'Your Complaint has been submitted successfully', 'status' => true], 200);
+        } else {
+            return response()->json(['message' => 'failed', 'status' => false], 200);
+        }
+    }
 }

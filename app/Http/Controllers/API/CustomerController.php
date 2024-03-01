@@ -4,11 +4,14 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\CustomerDocument;
+use App\Models\CustomerFamily;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -88,10 +91,10 @@ class CustomerController extends Controller
     public function login(Request $request)
     {
         try {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+            $request->validate([
+                'email' => 'required|email',
+                'password' => 'required',
+            ]);
             $credentials = $request->only('email', 'password');
             if (Auth::guard('customer')->attempt($credentials)) {
                 $customer = Customer::where('email', $request->email)->firstOrFail();
@@ -111,4 +114,86 @@ class CustomerController extends Controller
         $request->user('customer')->tokens()->delete();
         return response()->json(['message' => 'Successfully logged out'], 200);
     }
+    public function document(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'documents_images.*' => 'required|file',
+                'document_description' => 'required',
+                'customer_id' => 'required|exists:customers,id',
+            ]);
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 400);
+            }
+            $description = $request->document_description;
+            $documents = [];
+            // dd($request->documents_images);
+            // if ($file = $request->file('documents_images')) {
+            //     $fileName = $file->getClientOriginalName();
+            //     $file->move(public_path('customer_doc'), $fileName);
+            //     $document = new CustomerDocument();
+            //     $document->documents_images = 'customer_doc/' . $fileName;
+            //     $document->document_description = $description;
+            //     $document->customer_id = $request->customer_id;
+            //     $document->save();
+            //     $documents[] = $document;
+            // }
+            foreach ($request->file('documents_images') as $file) {
+                if ($file->isValid()) {
+                    $fileName = $file->getClientOriginalName();
+                    $file->move(public_path('customer_doc'), $fileName);
+                    $document = new CustomerDocument();
+                    $document->documents_images = 'customer_doc/' . $fileName;
+                    $document->document_description = $description;
+                    $document->customer_id = $request->customer_id;
+                    $document->save();
+                    $documents[] = $document;
+                }
+            }
+            return response()->json(['message' => 'Documents Uploaded successfully', 'data' => $documents]);
+        } catch (QueryException $e) {
+            return response()->json(['error' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+    public function AddFamily(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:255',
+                'gender' => 'nullable|in:male,female,other',
+                'dob' => 'nullable|date',
+                'phone_number' => 'nullable|string|max:20',
+                'email' => 'required|string|email|max:255|unique:customer_families',
+                'address' => 'nullable|string',
+                'city' => 'nullable|string|max:255',
+                'state' => 'nullable|string|max:255',
+                'password' => 'nullable|string|min:8|confirmed',
+            ]);
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
+            $request->merge(['dob' => Carbon::createFromFormat('d-m-Y', $request->dob)->format('Y-m-d')]);
+            // $customerId = Auth::id();
+            $user = CustomerFamily::create([
+                // 'customer_id' => $customerId,
+                'customer_id' => $request->customer_id,
+                'name' => $request->name,
+                'gender' => $request->gender,
+                'dob' => $request->dob,
+                'phone_number' => $request->phone_number,
+                'email' => $request->email,
+                'address' => $request->address,
+                'city' => $request->city,
+                'state' => $request->state,
+                'password' => Hash::make($request->password),
+            ]);
+            return response()->json(['message' => 'Added successfully', 'user' => $user], 201);
+        } catch (\Exception $e) {
+            // return response()->json(['error' => 'Registration failed. Please try again later.'], 500);
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
 }

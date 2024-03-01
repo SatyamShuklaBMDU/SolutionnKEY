@@ -60,7 +60,7 @@ Route::middleware('auth')->group(function () {
     // Complaint Route
     Route::get('/complaint', [ComplaintController::class, 'index'])->name('complaint');
     Route::post('/complaint/filter',[ComplaintController::class,'filter'])->name('complaint-filter');
-    Route::delete('/delete-complaint/{id}', [ComplaintController::class, 'destroy'])->name('delete-feedback');
+    Route::delete('/delete-complaint/{id}', [ComplaintController::class, 'destroy'])->name('delete-complaint');
     //Service Route
     Route::get('/service', [ServiceController::class, 'index'])->name('service');
     Route::post('/services/filter',[ServiceController::class,'filter'])->name('service-filter');

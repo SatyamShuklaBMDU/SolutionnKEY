@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\CustomerDocument;
 use App\Models\CustomerFamily;
+use App\Models\VendorWishlist;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -167,9 +168,10 @@ class CustomerController extends Controller
                 'phone_number' => 'nullable|string|max:20',
                 'email' => 'required|string|email|max:255|unique:customer_families',
                 'address' => 'nullable|string',
+                'marital_status' => 'nullable|string',
                 'city' => 'nullable|string|max:255',
                 'state' => 'nullable|string|max:255',
-                'password' => 'nullable|string|min:8|confirmed',
+                'password' => 'nullable|string|min:8',
             ]);
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors()], 422);
@@ -185,6 +187,7 @@ class CustomerController extends Controller
                 'phone_number' => $request->phone_number,
                 'email' => $request->email,
                 'address' => $request->address,
+                'marital_status' => $request->marital_status,
                 'city' => $request->city,
                 'state' => $request->state,
                 'password' => Hash::make($request->password),
@@ -195,5 +198,20 @@ class CustomerController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
-
+    public function addToWishlist(Request $request)
+    {
+        try {
+            $request->validate([
+                'vendor_id' => 'required|exists:vendors,id',
+            ]);
+            $customerId = Auth::id();
+            $wishlistItem = VendorWishlist::create([
+                'customer_id' => $customerId,
+                'vendor_id' => $request->vendor_id,
+            ]);
+            return response()->json(['message' => 'Vendor added to wishlist successfully', 'wishlistItem' => $wishlistItem], 201);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to add vendor to wishlist'], 500);
+        }
+    }
 }

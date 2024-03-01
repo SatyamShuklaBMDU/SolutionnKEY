@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\BlogController;
 use App\Http\Controllers\API\CommentController;
 use App\Http\Controllers\API\CustomerController;
 use App\Http\Controllers\API\FeedbackController;
@@ -27,6 +28,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('customer')->group(function () {
     Route::post('/register', [CustomerController::class, 'register']);
     Route::post('/document', [CustomerController::class, 'document']);
+    Route::post('/wishlist/add', [CustomerController::class, 'addToWishlist']);
     Route::post('/add-family', [CustomerController::class, 'AddFamily']);
     Route::post('/update', [CustomerController::class, 'update']);
     Route::post('/login', [CustomerController::class, 'login']);
@@ -44,6 +46,7 @@ Route::prefix('vendor')->group(function () {
     Route::post('/change-password', [VendorController::class, 'changePassword']);
     Route::post('/posts', [PostController::class, 'store']);
     Route::post('/posts/update', [PostController::class, 'update']);
+    Route::post('/blogs/register', [BlogController::class, 'register']);
 });
 Route::prefix('posts')->group(function () {
     Route::post('/comments', [CommentController::class, 'store']);

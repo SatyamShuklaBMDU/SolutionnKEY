@@ -24,10 +24,12 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users,email',
             'role' => 'required',
             'password' => 'required|min:6',
             'permission' => 'required',
+        ], [
+            'email.unique' => 'The email address is already in use.',
         ]);
         $user = new User();
         $user->name = $request->name;

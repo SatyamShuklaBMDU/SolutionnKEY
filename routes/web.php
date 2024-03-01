@@ -55,15 +55,18 @@ Route::middleware('auth')->group(function () {
     });
     // FeedBack Route
     Route::get('/feedback', [FeedbackController::class, 'index'])->name('feedback');
+    Route::post('/feedback/filter',[ComplaintController::class,'filter'])->name('feedback-filter');
     Route::delete('/delete-feedback/{id}', [FeedbackController::class, 'destroy'])->name('delete-feedback');
     // Complaint Route
     Route::get('/complaint', [ComplaintController::class, 'index'])->name('complaint');
+    Route::post('/complaint/filter',[ComplaintController::class,'filter'])->name('complaint-filter');
     Route::delete('/delete-complaint/{id}', [ComplaintController::class, 'destroy'])->name('delete-feedback');
     //Service Route
     Route::get('/service', [ServiceController::class, 'index'])->name('service');
+    Route::post('/services/filter',[ServiceController::class,'filter'])->name('service-filter');
     Route::get('/service-create', [ServiceController::class, 'create'])->name('service-create');
     Route::post('/services', [ServiceController::class, 'service_store'])->name('services-store'); 
-    Route::get('/services-edit/{service}', [ServiceController::class, 'gitedit'])->name('services-edit');
+    Route::get('/services-edit/{service}', [ServiceController::class, 'edit'])->name('services-edit');
     Route::put('/services/{service}', [ServiceController::class, 'update'])->name('services-update');
     Route::delete('/delete-service/{id}', [ServiceController::class, 'destroy'])->name('delete-service');
 

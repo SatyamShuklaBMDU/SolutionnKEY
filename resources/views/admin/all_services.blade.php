@@ -79,7 +79,7 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-12 ">
                         <div class="row mb" style="margin-bottom: 30px; margin-left: 5px;">
-                            <form action="{{ route('user-filter') }}" method="post">
+                            <form action="{{ route('service-filter') }}" method="post">
                                 @csrf
                                 <div class="col-sm-1">
                                     <p class="text-dark">
@@ -111,7 +111,7 @@
                                         style="background-color:#033496;">Filter</button>
                                 </div>
                                 <div class="col-md-1 text-end" style="margin-left: 10px; margin-top: 47px;">
-                                    <a class="btn text-white shadow-lg" href="{{ route('all-users') }}"
+                                    <a class="btn text-white shadow-lg" href="{{ route('service') }}"
                                         style="background-color:#033496;">Reset</a>
                                 </div>
                             </form>
@@ -195,30 +195,6 @@
             });
         });
     </script>
-    {{-- <script>
-        $(document).ready(function() {
-            $('.delete-location').click(function(event) {
-                event.preventDefault();
-                var CustomerId = $(this).closest('tr').attr('data-customer-id');
-                if (confirm('Are you sure you want to delete this Number?')) {
-                    $.ajax({
-                        url: '/delete-service/' + CustomerId,
-                        type: 'DELETE',
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        success: function(response) {
-                            alert('Deleted successfully');
-                            location.reload();
-                        },
-                        error: function(xhr, status, error) {
-                            alert('Error deleting Number:', error);
-                        }
-                    });
-                }
-            });
-        });
-    </script> --}}
     <script>
         $(document).ready(function() {
             $('.delete-location').click(function(event) {

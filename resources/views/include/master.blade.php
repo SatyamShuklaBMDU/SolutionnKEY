@@ -46,5 +46,4 @@
     @yield('script-area')
     @include('include.foot')
 </body>
-
 </html>

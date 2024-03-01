@@ -13,4 +13,15 @@ class FeedbackController extends Controller
         $feedback = Feedback::all();
         return view('admin.feedback',compact('feedback'));
     }
+
+    public function filter(Request $request)
+    {
+        $start = $request->start;
+        $end = $request->end;
+        $complaint= Feedback::whereDate('created_at', '>=', $start)
+            ->whereDate('created_at', '<=', $end)
+            ->orderBy('created_at', 'desc')
+            ->get();
+        return view('admin.feedback', compact('feedback', 'start', 'end'));
+    }
 }

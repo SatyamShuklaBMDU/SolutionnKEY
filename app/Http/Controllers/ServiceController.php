@@ -33,8 +33,19 @@ class ServiceController extends Controller
         return redirect()->route('service')->with('success', 'Service created successfully!');
     }
 
-    public function edit(Service $service)
+    public function filter(Request $request)
     {
+        $start = $request->start;
+        $end = $request->end;
+        $services = Service::whereDate('created_at', '>=', $start)
+            ->whereDate('created_at', '<=', $end)
+            ->orderBy('created_at', 'desc')
+            ->get();
+        return view('admin.all_services', compact('services', 'start', 'end'));
+    }
+
+    public function edit(Service $service)
+    { 
         return view('admin.create_services', compact('service'));
     }
 

@@ -65,8 +65,8 @@
     <section class="main_content dashboard_part">
         <nav aria-label="breadcrumb" class="mb-5">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Complaints Management</a></li>
-                <li class="breadcrumb-item active" aria-current="page">All Complaints</li>
+                <li class="breadcrumb-item"><a href="#">Services Management</a></li>
+                <li class="breadcrumb-item active" aria-current="page">All Services</li>
             </ol>
         </nav>
         @if (session()->has('success'))
@@ -123,29 +123,47 @@
                                     <thead>
                                         <tr>
                                             <th>S No.</th>
+                                            <th>Image</th>
                                             <th> Date</th>
-                                            <th> Name</th>
-                                            <th>Subject</th>
-                                            <th>Message</th>
-                                            {{-- <th>User Name</th> --}}
+                                            <th>Services Name</th>
+                                            {{-- <th>Subject</th> --}}
+                                            <th>Description</th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($complaint as $user)
-                                            <tr class="odd" data-user-id="{{ $user->id }}">
-                                                <td  class="sorting_1">{{ $loop->iteration }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($user->created_at)->format('d M,Y') }}
+                                        @foreach ($services as $service)
+                                            <tr class="odd" data-user-id="{{ $service->id }}">
+                                                <td class="sorting_1">{{ $loop->iteration }}</td>
+                                                @if ($service->image)
+                                                    <td><img class="rounded" src="{{ asset('storage/' . $service->image) }}" alt="Service Image" style="width: 100px; height: 70px;"  ></td>
+                                                @else
+                                                   <td> <p>No image available</p></td>
+                                                @endif
+
+                                                <td>{{ \Carbon\Carbon::parse($service->created_at)->format('d M,Y') }}
                                                 </td>
-                                                <td>{{ $user->customer->name }}</td>
-                                                <td>{{ $user->message }}</td>
-                                                <td>{{ $user->subject }}</td>
+                                                <td>{{ $service->services_name }}</td>
+                                                <td>{{ $service->description }}</td>
+                                                <td>
+                                                @if ($service->status==1)
+                                                <div class="job-status text-capitalize">Active</div>
+                                                @else
+                                                <div class="job-status text-capitalize">Block</div>   
+                                                @endif
+                                            </td>
                                                 <td class="action">
                                                     <button type="button" class="btn btn-outline-danger">
-                                                        <i class="fa fa-trash-o delete-location"
+                                                        <i class="fa fa-trash-o delete-location" data-service-id="{{ $service->id }}"
                                                             style="padding-right: -10px;font-size: 17px;"></i>
                                                     </button>
-                                                    
+                                                    <button type="button" class="btn btn-outline-danger">
+                                                        <a href="{{ route('services-edit', $service->id) }}">
+                                                            <i class="fa fa-pencil"
+                                                            style="padding-right: -10px;font-size: 17px;"></i>
+                                                        </a>
+                                                    </button>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -177,14 +195,14 @@
             });
         });
     </script>
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             $('.delete-location').click(function(event) {
                 event.preventDefault();
                 var CustomerId = $(this).closest('tr').attr('data-customer-id');
                 if (confirm('Are you sure you want to delete this Number?')) {
                     $.ajax({
-                        url: '/delete-complaint/' + CustomerId,
+                        url: '/delete-service/' + CustomerId,
                         type: 'DELETE',
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -200,7 +218,33 @@
                 }
             });
         });
+    </script> --}}
+    <script>
+        $(document).ready(function() {
+            $('.delete-location').click(function(event) {
+                event.preventDefault();
+                var serviceId = $(this).data('service-id');
+                if (confirm('Are you sure you want to delete this service?')) {
+                    $.ajax({
+                        url: 'delete-service/'+ serviceId,
+                        type: 'DELETE',
+                        data: { id: serviceId },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(response) {
+                            alert('Service deleted successfully');
+                            location.reload(); // Reload the page after deletion
+                        },
+                        error: function(xhr, status, error) {
+                            alert('Error deleting service: ' + error);
+                        }
+                    });
+                }
+            });
+        });
     </script>
+    
     <script>
         $(document).ready(function() {
             $('#customerTable').DataTable({

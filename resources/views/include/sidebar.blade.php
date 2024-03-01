@@ -33,12 +33,15 @@
             @endif
             @if(auth()->check() && auth()->user()->hasPermission('servicemanagement'))
             <li class>
-                <a class="has-arrow" href="#" aria-expanded="false">
+                <a class="has-arrow" href="{{ route('service') }}" aria-expanded="false">
                     <i class="fa fa-address-book" style="color: #033496;"></i>
                     <span style="font-size: 13px;color: #033496;"><b>Service Management</b></span>
                 </a>
                 <ul>
-                    <li><a href="service.html"><span style="color: #033496;">Services</span></a></li>
+                    <li><a href="{{ route('service') }}"><span style="color: #033496;"> All Services</span></a></li>
+                </ul>
+                <ul>
+                    <li><a href="{{ route('service-create') }}"><span style="color: #033496;">Add Services</span></a></li>
                 </ul>
             </li>
             @endif

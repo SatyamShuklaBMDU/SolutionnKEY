@@ -4,6 +4,7 @@ use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +22,7 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     Auth::logout();
-    session()->invalidate();
+    // session()->invalidate();
     return view('auth.login');
 });
 
@@ -47,11 +48,17 @@ Route::middleware('auth')->group(function () {
 
     // FeedBack Route
     Route::get('/feedback', [FeedbackController::class, 'index'])->name('feedback');
-    Route::delete('/delete-feedback/{id}', [CustomerController::class, 'destroy'])->name('delete-feedback');
-    
+    Route::delete('/delete-feedback/{id}', [FeedbackController::class, 'destroy'])->name('delete-feedback');
     // Complaint Route
     Route::get('/complaint', [ComplaintController::class, 'index'])->name('complaint');
-    Route::delete('/delete-complaint/{id}', [CustomerController::class, 'destroy'])->name('delete-feedback');
+    Route::delete('/delete-complaint/{id}', [ComplaintController::class, 'destroy'])->name('delete-feedback');
+    //Service Route
+    Route::get('/service', [ServiceController::class, 'index'])->name('service');
+    Route::get('/service-create', [ServiceController::class, 'create'])->name('service-create');
+    Route::post('/services', [ServiceController::class, 'service_store'])->name('services-store'); 
+    Route::get('/services-edit/{service}', [ServiceController::class, 'edit'])->name('services-edit');
+    Route::put('/services/{service}', [ServiceController::class, 'update'])->name('services-update');
+    Route::delete('/delete-service/{id}', [ServiceController::class, 'destroy'])->name('delete-service');
 
 });
 

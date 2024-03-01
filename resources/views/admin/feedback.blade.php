@@ -79,7 +79,7 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-12 ">
                         <div class="row mb" style="margin-bottom: 30px; margin-left: 5px;">
-                            <form action="{{ route('user-filter') }}" method="post">
+                            <form action="{{ route('feedback-filter') }}" method="post">
                                 @csrf
                                 <div class="col-sm-1">
                                     <p class="text-dark">
@@ -111,7 +111,7 @@
                                         style="background-color:#033496;">Filter</button>
                                 </div>
                                 <div class="col-md-1 text-end" style="margin-left: 10px; margin-top: 47px;">
-                                    <a class="btn text-white shadow-lg" href="{{ route('all-users') }}"
+                                    <a class="btn text-white shadow-lg" href="{{ route('feedback') }}"
                                         style="background-color:#033496;">Reset</a>
                                 </div>
                             </form>

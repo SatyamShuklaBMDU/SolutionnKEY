@@ -48,4 +48,7 @@ class CustomerController extends Controller
         $customer->save();
         return response()->json(['success' => true, 'message' => 'Account status updated successfully']);
     }
+    public function family(){
+        return view('admin.all_family');
+    }
 }

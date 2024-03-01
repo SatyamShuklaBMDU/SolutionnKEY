@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
@@ -69,6 +73,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/services-edit/{service}', [ServiceController::class, 'edit'])->name('services-edit');
     Route::put('/services/{service}', [ServiceController::class, 'update'])->name('services-update');
     Route::delete('/delete-service/{id}', [ServiceController::class, 'destroy'])->name('delete-service');
+    //Blog Controller
+    Route::get('/blog/Pending', [BlogController::class, 'pending'])->name('blog-pending');
+    Route::get('/blog/Approved', [BlogController::class, 'approved'])->name('blog-approved');
+    //Notifactions Route
+    Route::get('/notification', [NotificationController::class, 'index'])->name('notification');
+    Route::get('/notification/create', [NotificationController::class, 'create'])->name('notification-create');
+    Route::post('/notification/filter', [NotificationController::class, 'filter'])->name('notification-filter');
+    Route::post('/notification/store', [NotificationController::class, 'store'])->name('notification-store');
+    // Document Route
+    Route::get('/customer/Documents', [DocumentController::class, 'index'])->name('customer-document');
+    // Family Route
+    Route::get('/customer/Family', [FamilyController::class, 'index'])->name('customer-family');
+
+    
 
 });
 

@@ -63,7 +63,9 @@
                     <span style="font-size: 13px; color: #033496"><b>Customer Management</b></span>
                 </a>
                 <ul>
-                    <li><a href="{{route('customer-show')}}"><span style="color: #033496;"> Details</span></a></li>
+                    <li><a href="{{route('customer-show')}}"><span style="color: #033496;">Customer Details</span></a></li>
+                    <li><a href="{{route('customer-document')}}"><span style="color: #033496;">Customer Documents</span></a></li>
+                    <li><a href="{{route('customer-family')}}"><span style="color: #033496;">Customer Family Details</span></a></li>
                 </ul>
             </li>
             @endif
@@ -87,6 +89,30 @@
                 </a>
                 <ul>
                     <li><a href="#"><span style="color: #033496;"> Payments</span></a></li>
+                </ul>
+            </li>
+            @endif
+            @if(auth()->check() && auth()->user()->hasPermission('blogmanagement'))
+            <li class="mm-active">
+                <a class="has-arrow" href="#" aria-expanded="false">
+                    <i class="fa fa-google-wallet" style="color: #033496;"></i>
+                    <span style="font-size: 14px; color: #033496"><b>Blog Management</b></span>
+                </a>
+                <ul>
+                    <li><a href="{{ route('blog-pending') }}"><span style="color: #033496;">Blog Pending</span></a></li>
+                    <li><a href="{{ route('blog-approved') }}"><span style="color: #033496;">Blog Approved</span></a></li>
+                </ul>
+            </li>
+            @endif
+            @if(auth()->check() && auth()->user()->hasPermission('notification'))
+            <li class="mm-active">
+                <a class="has-arrow" href="{{ route('notification') }}" aria-expanded="false">
+                    <i class="fa fa-google-wallet" style="color: #033496;"></i>
+                    <span style="font-size: 14px; color: #033496"><b>Notification</b></span>
+                </a>
+                <ul>
+                    <li><a href="{{ route('notification') }}"><span style="color: #033496;">Add Notification</span></a></li>
+                    <li><a href="{{ route('notification-create') }}"><span style="color: #033496;">All Notification</span></a></li>
                 </ul>
             </li>
             @endif

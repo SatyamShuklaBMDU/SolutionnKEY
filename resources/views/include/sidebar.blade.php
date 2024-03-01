@@ -52,7 +52,7 @@
                     <span style="font-size: 12px; color: #033496"><b>Professional Management</b></span>
                 </a>
                 <ul>
-                    <li><a href="pr.html"><span style="color: #033496;">Professionals</span></a></li>
+                    <li><a href="{{route('vendor-show')}}"><span style="color: #033496;">Professionals</span></a></li>
                 </ul>
             </li>
             @endif

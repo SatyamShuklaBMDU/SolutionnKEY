@@ -4,6 +4,7 @@ use App\Http\Controllers\API\BlogController;
 use App\Http\Controllers\API\CommentController;
 use App\Http\Controllers\API\CustomerController;
 use App\Http\Controllers\API\FeedbackController;
+use App\Http\Controllers\API\FilterController;
 use App\Http\Controllers\API\LikeController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\ReferralController;
@@ -40,7 +41,7 @@ Route::prefix('customer')->group(function () {
     Route::post('/feedback', [FeedbackController::class, 'addFeedback']);
     Route::post('/complaint', [FeedbackController::class, 'addComplaint']);
     Route::post('/schedule_slots/register', [SlotController::class, 'register']);
-
+    Route::get('/vendors/filter', [FilterController::class, 'filterVendors']);
 });
 // Vendor Routes
 Route::prefix('vendor')->group(function () {

@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Listeners\GenerateReferralCode;
 use App\Models\Customer;
 use App\Models\CustomerDocument;
 use App\Models\CustomerFamily;
 use App\Models\VendorWishlist;
 use Carbon\Carbon;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -43,12 +45,26 @@ class CustomerController extends Controller
                 $file->move(public_path('profile_pics'), $fileName);
                 $validatedData['profile_pic'] = 'profile_pics/' . $fileName;
             }
+            $randomDigits = mt_rand(10000, 99999);
+            $referralCode = 'SOLU' . $randomDigits;
+            $validatedData['refer_code'] = $referralCode;
             $customer = Customer::create($validatedData);
+            if ($request->has('from_referral_number') && !empty($request->from_referral_number)) {
+                if ($this->isValidReferralNumber($request->from_referral_number)) {
+                    $referralController = new ReferralController();
+                    $referralUser = Customer::where('refer_code', $request->from_referral_number)->first();
+                    // dd($referralUser);
+                    $referralController->store($referralUser->id, $customer->id);
+                } else {
+                    return response()->json(['message' => 'Invalid referral number.', 'success' => false], 200);
+                }
+            }
             return response()->json(['message' => 'Customer registered successfully', 'data' => $customer], Response::HTTP_CREATED);
         } catch (ValidationException $e) {
             return response()->json(['error' => $e->validator->errors()], Response::HTTP_BAD_REQUEST);
         } catch (QueryException $e) {
-            return response()->json(['error' => 'Failed to register customer.'], Response::HTTP_INTERNAL_SERVER_ERROR);
+            // return response()->json(['error' => 'Failed to register customer.'], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response()->json(['error' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
     public function update(Request $request)
@@ -194,8 +210,8 @@ class CustomerController extends Controller
             ]);
             return response()->json(['message' => 'Added successfully', 'user' => $user], 201);
         } catch (\Exception $e) {
-            // return response()->json(['error' => 'Registration failed. Please try again later.'], 500);
-            return response()->json(['error' => $e->getMessage()], 500);
+            return response()->json(['error' => 'Registration failed. Please try again later.'], 500);
+            // return response()->json(['error' => $e->getMessage()], 500);
         }
     }
     public function addToWishlist(Request $request)
@@ -212,6 +228,16 @@ class CustomerController extends Controller
             return response()->json(['message' => 'Vendor added to wishlist successfully', 'wishlistItem' => $wishlistItem], 201);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Failed to add vendor to wishlist'], 500);
+        }
+    }
+    private function isValidReferralNumber($referralNumber)
+    {
+        $referralUser = Customer::where('refer_code', $referralNumber)->first();
+
+        if ($referralUser) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

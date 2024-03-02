@@ -6,6 +6,9 @@ use App\Http\Controllers\API\CustomerController;
 use App\Http\Controllers\API\FeedbackController;
 use App\Http\Controllers\API\LikeController;
 use App\Http\Controllers\API\PostController;
+use App\Http\Controllers\API\ReferralController;
+use App\Http\Controllers\API\ReviewController;
+use App\Http\Controllers\API\SlotController;
 use App\Http\Controllers\API\VendorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -33,9 +36,11 @@ Route::prefix('customer')->group(function () {
     Route::post('/update', [CustomerController::class, 'update']);
     Route::post('/login', [CustomerController::class, 'login']);
     Route::post('/logout', [CustomerController::class, 'logout']);
-    // Feedback & Complaint
+    Route::post('/reviews', [ReviewController::class, 'store']);
     Route::post('/feedback', [FeedbackController::class, 'addFeedback']);
     Route::post('/complaint', [FeedbackController::class, 'addComplaint']);
+    Route::post('/schedule_slots/register', [SlotController::class, 'register']);
+
 });
 // Vendor Routes
 Route::prefix('vendor')->group(function () {

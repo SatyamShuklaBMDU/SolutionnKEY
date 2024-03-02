@@ -111,8 +111,8 @@
                     <span style="font-size: 14px; color: #033496"><b>Notification</b></span>
                 </a>
                 <ul>
-                    <li><a href="{{ route('notification') }}"><span style="color: #033496;">Add Notification</span></a></li>
-                    <li><a href="{{ route('notification-create') }}"><span style="color: #033496;">All Notification</span></a></li>
+                    <li><a href="{{ route('notification-create') }}"><span style="color: #033496;">Add Notification</span></a></li>
+                    <li><a href="{{ route('notification') }}"><span style="color: #033496;">All Notification</span></a></li>
                 </ul>
             </li>
             @endif

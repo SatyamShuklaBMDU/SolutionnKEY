@@ -22,4 +22,9 @@ class CustomerFamily extends Model
         'deactivated_at',
         'deactivation_remark',
     ];
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class,'customer_id','id');
+    }
 }

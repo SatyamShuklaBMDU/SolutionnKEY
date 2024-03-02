@@ -127,7 +127,7 @@
                                             <th> Date</th>
                                             <th>Name</th>
                                             <th>Document Description</th>
-                                            <th>Action</th>
+                                            {{-- <th>Action</th> --}}
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -143,9 +143,9 @@
                                                 <td>{{ \Carbon\Carbon::parse($document->created_at)->format('d M,Y') }}
                                                 </td>
                                                 {{-- <td>{{ $document-> }}</td> --}}
-                                                <td>{{ $document->document_description }</td>
+                                                <td>{{ $document->document_description }}</td>
                                                 <td>{{ $document->customer->name }}</td>
-                                                <td class="action">
+                                                {{-- <td class="action">
                                                     <button type="button" class="btn btn-outline-danger">
                                                         <i class="fa fa-trash-o delete-location" data-service-id="{{ $document->id }}"
                                                             style="padding-right: -10px;font-size: 17px;"></i>
@@ -156,7 +156,7 @@
                                                             style="padding-right: -10px;font-size: 17px;"></i>
                                                         </a>
                                                     </button>
-                                                </td>
+                                                </td> --}}
                                             </tr>
                                         @endforeach
                                     </tbody>

@@ -21,6 +21,8 @@ class CustomerFamily extends Model
         'account_status',
         'deactivated_at',
         'deactivation_remark',
+        'password',
+        'marital_status'
     ];
 
     public function customer()

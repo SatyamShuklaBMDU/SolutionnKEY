@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('dob')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('email')->unique();
+            $table->string('marital_status')->nullable();
             $table->string('password')->nullable();
             $table->text('address')->nullable();
             $table->string('city')->nullable();

@@ -75,6 +75,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/delete-service/{id}', [ServiceController::class, 'destroy'])->name('delete-service');
     //Blog Controller
     Route::get('/blog/Pending', [BlogController::class, 'pending'])->name('blog-pending');
+    Route::post('/change-account-status', [BlogController::class,'changeAccountStatus'])->name('change.blog.status');
+    Route::post('/blog-penidng/filter',[BlogController::class,'Pendingfilter'])->name('blog-pending-filter');
+    Route::post('/blog-approve/filter',[BlogController::class,'Approvefilter'])->name('blog-approve-filter');
     Route::get('/blog/Approved', [BlogController::class, 'approved'])->name('blog-approved');
     //Notifactions Route
     Route::get('/notification', [NotificationController::class, 'index'])->name('notification');

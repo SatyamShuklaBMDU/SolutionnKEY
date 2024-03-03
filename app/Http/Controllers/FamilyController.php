@@ -13,4 +13,15 @@ class FamilyController extends Controller
         return view('admin.all_family',compact('customer_families'));
         dd($customer_families);
     }
+
+    public function filter(Request $request)
+    {
+        $start = $request->start;
+        $end = $request->end;
+        $customer_families= CustomerFamily::whereDate('created_at', '>=', $start)
+            ->whereDate('created_at', '<=', $end)
+            ->orderBy('created_at', 'desc')
+            ->get();
+        return view('admin.all_family', compact('customer_families', 'start', 'end'));
+    }
 }

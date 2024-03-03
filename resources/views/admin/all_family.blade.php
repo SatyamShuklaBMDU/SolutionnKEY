@@ -80,7 +80,7 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-12 ">
                         <div class="row mb" style="margin-bottom: 30px; margin-left: 5px;">
-                            <form action="{{ route('service-filter') }}" method="post">
+                            <form action="{{ route('family-filter') }}" method="post">
                                 @csrf
                                 <div class="col-sm-1">
                                     <p class="text-dark">
@@ -112,7 +112,7 @@
                                         style="background-color:#033496;">Filter</button>
                                 </div>
                                 <div class="col-md-1 text-end" style="margin-left: 10px; margin-top: 47px;">
-                                    <a class="btn text-white shadow-lg" href="{{ route('service') }}"
+                                    <a class="btn text-white shadow-lg" href="{{ route('customer-family') }}"
                                         style="background-color:#033496;">Reset</a>
                                 </div>
                             </form>

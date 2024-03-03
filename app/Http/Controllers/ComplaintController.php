@@ -18,7 +18,7 @@ class ComplaintController extends Controller
         $start = $request->start;
         $end = $request->end;
         $complaint= Complaint::whereDate('created_at', '>=', $start)
-            ->whereDate('created_at', '<=', $end)
+        ->whereDate('created_at', '<=', $end)
             ->orderBy('created_at', 'desc')
             ->get();
         return view('admin.complaint', compact('complaint', 'start', 'end'));

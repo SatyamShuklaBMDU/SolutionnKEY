@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DocumentController;
@@ -8,6 +9,9 @@ use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReferralController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\RewardCommissionController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -86,8 +90,25 @@ Route::middleware('auth')->group(function () {
     Route::post('/notification/store', [NotificationController::class, 'store'])->name('notification-store');
     // Document Route
     Route::get('/customer/Documents', [DocumentController::class, 'index'])->name('customer-document');
+    Route::post('/document/filter', [DocumentController::class, 'filter'])->name('document-filter');
     // Family Route
     Route::get('/customer/Family', [FamilyController::class, 'index'])->name('customer-family');
+    Route::post('/fimily/filter', [FamilyController::class, 'filter'])->name('family-filter');
+    //Booking Controller 
+    Route::get('/online/booking', [BookingController::class, 'online_booking'])->name('online-booking');
+    Route::get('/physical/booking', [BookingController::class, 'physical_booking'])->name('physical-booking');
+    //Referral Controller
+    Route::get('/Referral/Earning', [ReferralController::class, 'index'])->name('referral-earning');
+    // Controller
+    Route::get('/review/Rating', [ReviewController::class, 'index'])->name('reviews-rating');
+    //Reward And Commission Route
+    Route::get('/reward/commission', [RewardCommissionController::class, 'index'])->name('reward-commission');
+    Route::get('/reward/commission/create', [RewardCommissionController::class, 'create'])->name('reward-create');
+    Route::post('/reward/commission/create', [RewardCommissionController::class, 'store'])->name('reward-store');
+    Route::get('/reward/commission/edit/{reward}', [RewardCommissionController::class, 'edit'])->name('reward-edit');
+    Route::put('/reward/commission/{service}', [RewardCommissionController::class, 'update'])->name('reward-update');
+    Route::delete('/delete-reward/{id}', [RewardCommissionController::class, 'destroy'])->name('delete-reward');
+    
 
     
 

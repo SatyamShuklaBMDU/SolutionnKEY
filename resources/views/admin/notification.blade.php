@@ -57,24 +57,6 @@
                             action="{{ route('notification-store') }}">
                             @csrf
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Subject</label>
-                                <input type="text" class="form-control @error('subject') is-invalid @enderror"
-                                    id="subject" name="subject" aria-describedby="textHelp" placeholder="Subject"
-                                    value="{{ old('subject') }}">
-                                @error('subject')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label for="exampleFormControlTextarea1">Notification Message</label>
-                                <textarea class="form-control @error('message') is-invalid @enderror" placeholder="Type Message" name="message"
-                                    id="exampleFormControlTextarea1" rows="3"> {{ old('message') }}</textarea>
-                                @error('message')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
                                 <label for="exampleFormControlTextarea1">Notification Send </label>
                                 <br>
                                 <div class="form-check form-check-inline">
@@ -97,6 +79,24 @@
                                 </div>
 
                                 @error('for')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Subject</label>
+                                <input type="text" class="form-control @error('subject') is-invalid @enderror"
+                                    id="subject" name="subject" aria-describedby="textHelp" placeholder="Subject"
+                                    value="{{ old('subject') }}">
+                                @error('subject')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1">Notification Message</label>
+                                <textarea class="form-control @error('message') is-invalid @enderror" placeholder="Type Message" name="message"
+                                    id="exampleFormControlTextarea1" rows="3"> {{ old('message') }}</textarea>
+                                @error('message')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>

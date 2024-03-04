@@ -24,4 +24,9 @@ class CustomerFamily extends Model
         'password',
         'marital_status'
     ];
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class,'customer_id','id');
+    }
 }

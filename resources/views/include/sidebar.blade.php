@@ -76,7 +76,8 @@
                     <span style="font-size: 13px;color: #033496"><b>Booking & Scheduling:</b></span>
                 </a>
                 <ul>
-                    <li><a href="booking.html"><span style="color: #033496;"> Bookings</span></a>
+                    <li><a href="{{ route('online-booking') }}"><span style="color: #033496;">Online Bookings</span></a>
+                    <li><a href="{{ route('physical-booking') }}"><span style="color: #033496;">Physical Bookings</span></a>
                     </li>
                 </ul>
             </li>
@@ -111,8 +112,8 @@
                     <span style="font-size: 14px; color: #033496"><b>Notification</b></span>
                 </a>
                 <ul>
-                    <li><a href="{{ route('notification') }}"><span style="color: #033496;">Add Notification</span></a></li>
-                    <li><a href="{{ route('notification-create') }}"><span style="color: #033496;">All Notification</span></a></li>
+                    <li><a href="{{ route('notification-create') }}"><span style="color: #033496;">Add Notification</span></a></li>
+                    <li><a href="{{ route('notification') }}"><span style="color: #033496;">All Notification</span></a></li>
                 </ul>
             </li>
             @endif
@@ -120,7 +121,23 @@
             <li>
                 <a href="{{ route('feedback') }}">
                     <i class="fa fa-exclamation" style="color: #033496;"></i>
-                    <span style="font-size: 14px;color: #033496"><b>Feedback & Reviews</b></span>
+                    <span style="font-size: 14px;color: #033496"><b>Feedbacks</b></span>
+                </a>
+            </li>
+            @endif
+            @if(auth()->check() && auth()->user()->hasPermission('reviews'))
+            <li>
+                <a href="{{ route('reviews-rating') }}">
+                    <i class="fa fa-exclamation" style="color: #033496;"></i>
+                    <span style="font-size: 14px;color: #033496"><b>Reviews & Ratings</b></span>
+                </a>
+            </li>
+            @endif
+            @if(auth()->check() && auth()->user()->hasPermission('referral'))
+            <li>
+                <a href="{{ route('referral-earning') }}">
+                    <i class="fa fa-exclamation" style="color: #033496;"></i>
+                    <span style="font-size: 14px;color: #033496"><b>Referral & Earning</b></span>
                 </a>
             </li>
             @endif
@@ -129,6 +146,14 @@
                 <a href="{{ route('complaint') }}">
                     <i class="fa fa-exclamation" style="color: #033496;"></i>
                     <span style="font-size: 14px;color: #033496"><b>Complaints</b></span>
+                </a>
+            </li>
+            @endif
+            @if(auth()->check() && auth()->user()->hasPermission('rewardscommission'))
+            <li>
+                <a href="{{ route('reward-commission') }}">
+                    <i class="fa fa-exclamation" style="color: #033496;"></i>
+                    <span style="font-size: 14px;color: #033496"><b>Rewards & Commissions</b></span>
                 </a>
             </li>
             @endif

@@ -65,8 +65,8 @@
     <section class="main_content dashboard_part">
         <nav aria-label="breadcrumb" class="mb-5">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Document Management</a></li>
-                <li class="breadcrumb-item active" aria-current="page">All Documents</li>
+                <li class="breadcrumb-item"><a href="#">Reward & Commission Management</a></li>
+                <li class="breadcrumb-item active" aria-current="page">All Reward & Commission</li>
             </ol>
         </nav>
         @if (session()->has('success'))
@@ -79,7 +79,7 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-12 ">
                         <div class="row mb" style="margin-bottom: 30px; margin-left: 5px;">
-                            <form action="{{ route('document-filter') }}" method="post">
+                            <form action="{{ route('service-filter') }}" method="post">
                                 @csrf
                                 <div class="col-sm-1">
                                     <p class="text-dark">
@@ -111,52 +111,50 @@
                                         style="background-color:#033496;">Filter</button>
                                 </div>
                                 <div class="col-md-1 text-end" style="margin-left: 10px; margin-top: 47px;">
-                                    <a class="btn text-white shadow-lg" href="{{ route('customer-document') }}"
+                                    <a class="btn text-white shadow-lg" href="{{ route('reward-commission') }}"
                                         style="background-color:#033496;">Reset</a>
                                 </div>
                             </form>
                         </div>
-                        <!-- Table -->
+                        
+                 <!-- Table -->
                         <div class="card">
                             <div class="card-body">
+                                <div class=" text-end">
+                                   <h1>
+                                    <button type="button" class="btn btn-outline-info text-dark border-50 mb-3"><a href="{{ route('reward-create') }}"> Create new reward</a></button>
+                                    </h1> 
+                                </div>
                                 <table id="customerTable" class="display nowrap" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>S No.</th>
-                                            <th>Image</th>
                                             <th> Date</th>
-                                            <th>Name</th>
-                                            <th>Document Description</th>
-                                            {{-- <th>Action</th> --}}
+                                            <th>Reward Type</th>
+                                            <th>Reward Amount</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($customer_documents as $document)
-                                            <tr class="odd" data-user-id="{{ $document->id }}">
+                                        @foreach ($reward_commissions as $reward)
+                                            <tr class="odd" data-user-id="{{ $reward->id }}">
                                                 <td class="sorting_1">{{ $loop->iteration }}</td>
-                                                @if ($document->documents_images)
-                                                    <td><img class="rounded" src="{{ asset('/' . $document->documents_images) }}" alt="No Image" style="width: 100px; height: 70px;"  ></td>
-                                                @else
-                                                   <td> <p>No image available</p></td>
-                                                @endif
-
-                                                <td>{{ \Carbon\Carbon::parse($document->created_at)->format('d M,Y') }}
+                                                <td>{{ \Carbon\Carbon::parse($reward->created_at)->format('d M,Y') }}
                                                 </td>
-                                                {{-- <td>{{ $document-> }}</td> --}}
-                                                <td>{{ $document->document_description }}</td>
-                                                <td>{{ $document->customer->name }}</td>
-                                                {{-- <td class="action">
+                                                <td>{{ $reward->reward_type }}</td>
+                                                <td>{{ $reward->reward_amount }}</td>
+                                                <td class="action">
                                                     <button type="button" class="btn btn-outline-danger">
-                                                        <i class="fa fa-trash-o delete-location" data-service-id="{{ $document->id }}"
+                                                        <i class="fa fa-trash-o delete-location" data-reward-id="{{ $reward->id }}"
                                                             style="padding-right: -10px;font-size: 17px;"></i>
                                                     </button>
                                                     <button type="button" class="btn btn-outline-danger">
-                                                        <a href="{{ route('services-edit', $document->id) }}">
+                                                        <a href="{{ route('reward-edit', $reward->id) }}">
                                                             <i class="fa fa-pencil"
                                                             style="padding-right: -10px;font-size: 17px;"></i>
                                                         </a>
                                                     </button>
-                                                </td> --}}
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -191,17 +189,17 @@
         $(document).ready(function() {
             $('.delete-location').click(function(event) {
                 event.preventDefault();
-                var serviceId = $(this).data('service-id');
-                if (confirm('Are you sure you want to delete this service?')) {
+                var rewardId = $(this).data('reward-id');
+                if (confirm('Are you sure you want to delete this reward?')) {
                     $.ajax({
-                        url: 'delete-service/'+ serviceId,
+                        url: 'delete-reward/'+ rewardId,
                         type: 'DELETE',
-                        data: { id: serviceId },
+                        data: { id: rewardId },
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         success: function(response) {
-                            alert('Service deleted successfully');
+                            alert('Reward deleted successfully');
                             location.reload(); // Reload the page after deletion
                         },
                         error: function(xhr, status, error) {

@@ -58,6 +58,7 @@
     </style>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
 @endsection
@@ -65,8 +66,8 @@
     <section class="main_content dashboard_part">
         <nav aria-label="breadcrumb" class="mb-5">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Document Management</a></li>
-                <li class="breadcrumb-item active" aria-current="page">All Documents</li>
+                <li class="breadcrumb-item"><a href="#">Referral Management</a></li>
+                <li class="breadcrumb-item active" aria-current="page">All Referral</li>
             </ol>
         </nav>
         @if (session()->has('success'))
@@ -79,7 +80,7 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-12 ">
                         <div class="row mb" style="margin-bottom: 30px; margin-left: 5px;">
-                            <form action="{{ route('document-filter') }}" method="post">
+                            <form action="{{ route('family-filter') }}" method="post">
                                 @csrf
                                 <div class="col-sm-1">
                                     <p class="text-dark">
@@ -111,7 +112,7 @@
                                         style="background-color:#033496;">Filter</button>
                                 </div>
                                 <div class="col-md-1 text-end" style="margin-left: 10px; margin-top: 47px;">
-                                    <a class="btn text-white shadow-lg" href="{{ route('customer-document') }}"
+                                    <a class="btn text-white shadow-lg" href="{{ route('customer-family') }}"
                                         style="background-color:#033496;">Reset</a>
                                 </div>
                             </form>
@@ -119,48 +120,33 @@
                         <!-- Table -->
                         <div class="card">
                             <div class="card-body">
-                                <table id="customerTable" class="display nowrap" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>S No.</th>
-                                            <th>Image</th>
-                                            <th> Date</th>
-                                            <th>Name</th>
-                                            <th>Document Description</th>
-                                            {{-- <th>Action</th> --}}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($customer_documents as $document)
-                                            <tr class="odd" data-user-id="{{ $document->id }}">
-                                                <td class="sorting_1">{{ $loop->iteration }}</td>
-                                                @if ($document->documents_images)
-                                                    <td><img class="rounded" src="{{ asset('/' . $document->documents_images) }}" alt="No Image" style="width: 100px; height: 70px;"  ></td>
-                                                @else
-                                                   <td> <p>No image available</p></td>
-                                                @endif
-
-                                                <td>{{ \Carbon\Carbon::parse($document->created_at)->format('d M,Y') }}
-                                                </td>
-                                                {{-- <td>{{ $document-> }}</td> --}}
-                                                <td>{{ $document->document_description }}</td>
-                                                <td>{{ $document->customer->name }}</td>
-                                                {{-- <td class="action">
-                                                    <button type="button" class="btn btn-outline-danger">
-                                                        <i class="fa fa-trash-o delete-location" data-service-id="{{ $document->id }}"
-                                                            style="padding-right: -10px;font-size: 17px;"></i>
-                                                    </button>
-                                                    <button type="button" class="btn btn-outline-danger">
-                                                        <a href="{{ route('services-edit', $document->id) }}">
-                                                            <i class="fa fa-pencil"
-                                                            style="padding-right: -10px;font-size: 17px;"></i>
-                                                        </a>
-                                                    </button>
-                                                </td> --}}
+                                <div class="table-responsive">
+                                    <table id="customerTable" class="display nowrap" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>S No.</th>
+                                                <th> Date</th>
+                                                <th> Customer Name</th>
+                                                <th>Referral Name</th>
+                                                {{-- <th>Perferred Date 1</th>
+                                                <th>Perferred Date 2</th>
+                                                <th>Comminication Mode</th>
+                                                <th>Status</th> --}}
                                             </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($referrals as $online_booking)
+                                           <tr class="odd text-center" data-user-id="{{ $online_booking->id }}">
+                                                    <td class="sorting_1">{{ $loop->iteration }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($online_booking->created_at)->format('d M,Y') }}
+                                                    </td>
+                                                    <td>{{ $online_booking->fromcustomer->name }}</td>
+                                                    <td>{{ $online_booking->tocustomer->name }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -194,9 +180,11 @@
                 var serviceId = $(this).data('service-id');
                 if (confirm('Are you sure you want to delete this service?')) {
                     $.ajax({
-                        url: 'delete-service/'+ serviceId,
+                        url: 'delete-service/' + serviceId,
                         type: 'DELETE',
-                        data: { id: serviceId },
+                        data: {
+                            id: serviceId
+                        },
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
@@ -212,7 +200,7 @@
             });
         });
     </script>
-    
+
     <script>
         $(document).ready(function() {
             $('#customerTable').DataTable({

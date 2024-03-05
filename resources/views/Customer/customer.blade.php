@@ -191,7 +191,7 @@
                     }
                 }
                 $.ajax({
-                    url: "{{ route('change.account.status') }}",
+                    url: "{{ url('/change-account-status') }}",
                     method: 'POST',
                     data: {
                         _token: "{{ csrf_token() }}",

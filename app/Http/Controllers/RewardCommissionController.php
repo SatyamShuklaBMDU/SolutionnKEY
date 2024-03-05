@@ -56,9 +56,9 @@ class RewardCommissionController extends Controller
         return redirect()->route('reward-commission')->with('success', 'Updated successfully!');
     }
 
-    public function destroy(RewardCommission $reward)
+    public function destroy($id)
     {
-        $reward->delete();
+        RewardCommission::find($id)->delete();
         return redirect()->route('reward-commission')->with('success', 'Deleted successfully!');
     }
 }

@@ -164,12 +164,8 @@
                 var rewardId = $(this).data('reward-id');
                 if (confirm('Are you sure you want to delete this reward?')) {
                     $.ajax({
-                        url: 'delete-reward/' + rewardId,
-                        type: 'DELETE',
-                        data: { id:rewardId },
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
+                        url: '{{ route('delete-reward', '') }}' + '/' + rewardId, // Add slash before appending the rewardId
+                        type: 'GET',
                         success: function(response) {
                             alert('Reward deleted successfully');
                             location.reload();

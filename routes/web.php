@@ -111,8 +111,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/reward/commission/store', [RewardCommissionController::class, 'store'])->name('reward-store');
     Route::get('/reward/commission/edit/{reward}', [RewardCommissionController::class, 'edit'])->name('reward-edit');
     Route::put('/reward/commission/{service}', [RewardCommissionController::class, 'update'])->name('reward-update');
-    Route::delete('/delete-reward/{id}', [RewardCommissionController::class, 'destroy'])->name('delete-reward');
     Route::post('/reward/filter', [RewardCommissionController::class, 'filter'])->name('reward-filter');
+    Route::get('/delete-reward/{id}', [RewardCommissionController::class, 'destroy'])->name('delete-reward');
 });
 
 require __DIR__.'/auth.php';

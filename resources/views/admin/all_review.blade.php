@@ -80,7 +80,7 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-12 ">
                         <div class="row mb" style="margin-bottom: 30px; margin-left: 5px;">
-                            <form action="{{ route('family-filter') }}" method="post">
+                            <form action="{{ route('review-filter') }}" method="post">
                                 @csrf
                                 <div class="col-sm-1">
                                     <p class="text-dark">
@@ -112,7 +112,7 @@
                                         style="background-color:#033496;">Filter</button>
                                 </div>
                                 <div class="col-md-1 text-end" style="margin-left: 10px; margin-top: 47px;">
-                                    <a class="btn text-white shadow-lg" href="{{ route('customer-family') }}"
+                                    <a class="btn text-white shadow-lg" href="{{ route('reviews-rating') }}"
                                         style="background-color:#033496;">Reset</a>
                                 </div>
                             </form>
@@ -137,15 +137,15 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($review as $online_booking)
-                                           <tr class="odd text-center" data-user-id="{{ $online_booking->id }}">
+                                            @foreach ($review as $reviews)
+                                           <tr class="odd text-center" data-user-id="{{ $reviews->id }}">
                                                     <td class="sorting_1">{{ $loop->iteration }}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($online_booking->created_at)->format('d M,Y') }}
+                                                    <td>{{ \Carbon\Carbon::parse($reviews->created_at)->format('d M,Y') }}
                                                     </td>
-                                                    <td>{{ $online_booking->customer->name }}</td>
-                                                    <td>{{ $online_booking->vendor->name }}</td>
-                                                    <td>{{ $online_booking->rating }}</td>
-                                                    <td>{{ $online_booking->content }}</td>
+                                                    <td>{{ $reviews->customer->name }}</td>
+                                                    <td>{{ $reviews->vendor->name }}</td>
+                                                    <td>{{ $reviews->rating }}</td>
+                                                    <td>{{ $reviews->content }}</td>
                                                     {{-- <td>{{ $online_booking->tocustomer->name }}</td> --}}
                                                 </tr>
                                             @endforeach

@@ -81,35 +81,7 @@
                         <div class="row mb" style="margin-bottom: 30px; margin-left: 5px;">
                             <form action="{{ route('service-filter') }}" method="post">
                                 @csrf
-                                <div class="col-sm-1">
-                                    <p class="text-dark">
-                                        <b>
-                                            <strong>Filters:</strong>
-                                        </b>
-                                    </p>
-                                </div>
-                                <div class="col-sm-3 end-date">
-                                    <p class="text-dark">
-                                        <strong>Date From:</strong>
-                                    </p>
-                                    <div class="input-group date d-flex">
-                                        <input type="date" class="form-control" name="start" id="datepickerFrom"
-                                            value="{{ $start ?? '' }}" placeholder="dd-mm-yyyy">
-                                    </div>
-                                </div>
-                                <div class="col-sm-3 end-date">
-                                    <p class="text-dark">
-                                        <strong>Date To:</strong>
-                                    </p>
-                                    <div class="input-group date d-flex">
-                                        <input type="date" class="form-control" name="end" id="datepickerTo"
-                                            value="{{ $end ?? '' }}" placeholder="dd-mm-yyyy">
-                                    </div>
-                                </div>
-                                <div class="col-md-1 text-end" style="margin-left: 10px; margin-top: 47px;">
-                                    <button class="btn text-white shadow-lg" type="submit"
-                                        style="background-color:#033496;">Filter</button>
-                                </div>
+                                @include('admin.date')
                                 <div class="col-md-1 text-end" style="margin-left: 10px; margin-top: 47px;">
                                     <a class="btn text-white shadow-lg" href="{{ route('service') }}"
                                         style="background-color:#033496;">Reset</a>
@@ -137,9 +109,12 @@
                                             <tr class="odd" data-user-id="{{ $service->id }}">
                                                 <td class="sorting_1">{{ $loop->iteration }}</td>
                                                 @if ($service->image)
-                                                    <td><img class="rounded" src="{{ asset('storage/' . $service->image) }}" alt="Service Image" style="width: 100px; height: 70px;"  ></td>
+                                                    <td><img class="rounded" src="{{ asset('storage/' . $service->image) }}"
+                                                            alt="Service Image" style="width: 100px; height: 70px;"></td>
                                                 @else
-                                                   <td> <p>No image available</p></td>
+                                                    <td>
+                                                        <p>No image available</p>
+                                                    </td>
                                                 @endif
 
                                                 <td>{{ \Carbon\Carbon::parse($service->created_at)->format('d M,Y') }}
@@ -147,21 +122,22 @@
                                                 <td>{{ $service->services_name }}</td>
                                                 <td>{{ $service->description }}</td>
                                                 <td>
-                                                @if ($service->status==1)
-                                                <div class="job-status text-capitalize">Active</div>
-                                                @else
-                                                <div class="job-status text-capitalize">Block</div>   
-                                                @endif
-                                            </td>
+                                                    @if ($service->status == 1)
+                                                        <div class="job-status text-capitalize">Active</div>
+                                                    @else
+                                                        <div class="job-status text-capitalize">Block</div>
+                                                    @endif
+                                                </td>
                                                 <td class="action">
                                                     <button type="button" class="btn btn-outline-danger">
-                                                        <i class="fa fa-trash-o delete-location" data-service-id="{{ $service->id }}"
+                                                        <i class="fa fa-trash-o delete-location"
+                                                            data-service-id="{{ $service->id }}"
                                                             style="padding-right: -10px;font-size: 17px;"></i>
                                                     </button>
                                                     <button type="button" class="btn btn-outline-danger">
                                                         <a href="{{ route('services-edit', $service->id) }}">
                                                             <i class="fa fa-pencil"
-                                                            style="padding-right: -10px;font-size: 17px;"></i>
+                                                                style="padding-right: -10px;font-size: 17px;"></i>
                                                         </a>
                                                     </button>
                                                 </td>
@@ -202,9 +178,11 @@
                 var serviceId = $(this).data('service-id');
                 if (confirm('Are you sure you want to delete this service?')) {
                     $.ajax({
-                        url: 'delete-service/'+ serviceId,
+                        url: 'delete-service/' + serviceId,
                         type: 'DELETE',
-                        data: { id: serviceId },
+                        data: {
+                            id: serviceId
+                        },Pe
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
@@ -220,7 +198,7 @@
             });
         });
     </script>
-    
+
     <script>
         $(document).ready(function() {
             $('#customerTable').DataTable({

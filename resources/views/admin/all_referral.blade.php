@@ -80,39 +80,11 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-12 ">
                         <div class="row mb" style="margin-bottom: 30px; margin-left: 5px;">
-                            <form action="{{ route('family-filter') }}" method="post">
+                            <form action="{{ route('referral-filter') }}" method="post">
                                 @csrf
-                                <div class="col-sm-1">
-                                    <p class="text-dark">
-                                        <b>
-                                            <strong>Filters:</strong>
-                                        </b>
-                                    </p>
-                                </div>
-                                <div class="col-sm-3 end-date">
-                                    <p class="text-dark">
-                                        <strong>Date From:</strong>
-                                    </p>
-                                    <div class="input-group date d-flex">
-                                        <input type="date" class="form-control" name="start" id="datepickerFrom"
-                                            value="{{ $start ?? '' }}" placeholder="dd-mm-yyyy">
-                                    </div>
-                                </div>
-                                <div class="col-sm-3 end-date">
-                                    <p class="text-dark">
-                                        <strong>Date To:</strong>
-                                    </p>
-                                    <div class="input-group date d-flex">
-                                        <input type="date" class="form-control" name="end" id="datepickerTo"
-                                            value="{{ $end ?? '' }}" placeholder="dd-mm-yyyy">
-                                    </div>
-                                </div>
+                                @include('admin.date')
                                 <div class="col-md-1 text-end" style="margin-left: 10px; margin-top: 47px;">
-                                    <button class="btn text-white shadow-lg" type="submit"
-                                        style="background-color:#033496;">Filter</button>
-                                </div>
-                                <div class="col-md-1 text-end" style="margin-left: 10px; margin-top: 47px;">
-                                    <a class="btn text-white shadow-lg" href="{{ route('customer-family') }}"
+                                    <a class="btn text-white shadow-lg" href="{{ route('referral-earning') }}"
                                         style="background-color:#033496;">Reset</a>
                                 </div>
                             </form>
@@ -128,20 +100,16 @@
                                                 <th> Date</th>
                                                 <th> Customer Name</th>
                                                 <th>Referral Name</th>
-                                                {{-- <th>Perferred Date 1</th>
-                                                <th>Perferred Date 2</th>
-                                                <th>Comminication Mode</th>
-                                                <th>Status</th> --}}
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($referrals as $online_booking)
-                                           <tr class="odd text-center" data-user-id="{{ $online_booking->id }}">
+                                            @foreach ($referrals as $referral)
+                                           <tr class="odd text-center" data-user-id="{{ $referral->id }}">
                                                     <td class="sorting_1">{{ $loop->iteration }}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($online_booking->created_at)->format('d M,Y') }}
+                                                    <td>{{ \Carbon\Carbon::parse($referral->created_at)->format('d M,Y') }}
                                                     </td>
-                                                    <td>{{ $online_booking->fromcustomer->name }}</td>
-                                                    <td>{{ $online_booking->tocustomer->name }}</td>
+                                                    <td>{{ $referral->fromcustomer->name }}</td>
+                                                    <td>{{ $referral->tocustomer->name }}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>

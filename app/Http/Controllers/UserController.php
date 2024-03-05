@@ -42,6 +42,10 @@ class UserController extends Controller
     }
     public function filter(Request $request)
     {
+        $request->validate([
+            'start' => 'required|date',
+            'end' => 'required|date|after_or_equal:start',
+        ]);
         $start = $request->start;
         $end = $request->end;
         $users = User::whereDate('created_at', '>=', $start)

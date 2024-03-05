@@ -56,9 +56,31 @@ class RewardCommissionController extends Controller
         return redirect()->route('reward-commission')->with('success', 'Updated successfully!');
     }
 
-    public function destroy(RewardCommission $reward)
+    public function destroy($id)
     {
+        $reward = RewardCommission::find($id);
+        if (!$reward) {
+            return response()->json(['message' => 'Reward not found'], 404);
+        }
+
         $reward->delete();
-        return redirect()->route('reward-commission')->with('success', 'Deleted successfully!');
+
+        return response()->json(['message' => 'Reward soft deleted successfully'], 200);
+    }
+
+    public function filter(Request $request)
+    {
+        $request->validate([
+            'start' => 'required|date',
+            'end' => 'required|date|after_or_equal:start',
+        ]);
+        $start = $request->start;
+        $end = $request->end;
+        $reward_commissions = RewardCommission::where('status','1')
+            ->whereDate('created_at', '>=', $start)
+            ->whereDate('created_at', '<=', $end)
+            ->orderBy('created_at', 'desc')
+            ->get();
+        return view('admin.all_reward_commission', compact('reward_commissions', 'start', 'end'));
     }
 }

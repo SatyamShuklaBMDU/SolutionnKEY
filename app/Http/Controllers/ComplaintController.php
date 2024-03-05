@@ -15,6 +15,10 @@ class ComplaintController extends Controller
 
     public function filter(Request $request)
     {
+        $request->validate([
+            'start' => 'required|date',
+            'end' => 'required|date|after_or_equal:start',
+        ]);
         $start = $request->start;
         $end = $request->end;
         $complaint= Complaint::whereDate('created_at', '>=', $start)

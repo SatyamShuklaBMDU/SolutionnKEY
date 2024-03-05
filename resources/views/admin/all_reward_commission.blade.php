@@ -79,37 +79,9 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-12 ">
                         <div class="row mb" style="margin-bottom: 30px; margin-left: 5px;">
-                            <form action="{{ route('service-filter') }}" method="post">
+                            <form action="{{ route('reward-filter') }}" method="post">
                                 @csrf
-                                <div class="col-sm-1">
-                                    <p class="text-dark">
-                                        <b>
-                                            <strong>Filters:</strong>
-                                        </b>
-                                    </p>
-                                </div>
-                                <div class="col-sm-3 end-date">
-                                    <p class="text-dark">
-                                        <strong>Date From:</strong>
-                                    </p>
-                                    <div class="input-group date d-flex">
-                                        <input type="date" class="form-control" name="start" id="datepickerFrom"
-                                            value="{{ $start ?? '' }}" placeholder="dd-mm-yyyy">
-                                    </div>
-                                </div>
-                                <div class="col-sm-3 end-date">
-                                    <p class="text-dark">
-                                        <strong>Date To:</strong>
-                                    </p>
-                                    <div class="input-group date d-flex">
-                                        <input type="date" class="form-control" name="end" id="datepickerTo"
-                                            value="{{ $end ?? '' }}" placeholder="dd-mm-yyyy">
-                                    </div>
-                                </div>
-                                <div class="col-md-1 text-end" style="margin-left: 10px; margin-top: 47px;">
-                                    <button class="btn text-white shadow-lg" type="submit"
-                                        style="background-color:#033496;">Filter</button>
-                                </div>
+                                @include('admin.date')
                                 <div class="col-md-1 text-end" style="margin-left: 10px; margin-top: 47px;">
                                     <a class="btn text-white shadow-lg" href="{{ route('reward-commission') }}"
                                         style="background-color:#033496;">Reset</a>
@@ -192,15 +164,15 @@
                 var rewardId = $(this).data('reward-id');
                 if (confirm('Are you sure you want to delete this reward?')) {
                     $.ajax({
-                        url: 'delete-reward/'+ rewardId,
+                        url: 'delete-reward/' + rewardId,
                         type: 'DELETE',
-                        data: { id: rewardId },
+                        data: { id:rewardId },
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         success: function(response) {
                             alert('Reward deleted successfully');
-                            location.reload(); // Reload the page after deletion
+                            location.reload();
                         },
                         error: function(xhr, status, error) {
                             alert('Error deleting service: ' + error);

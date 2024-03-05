@@ -113,10 +113,6 @@ Route::middleware('auth')->group(function () {
     Route::put('/reward/commission/{service}', [RewardCommissionController::class, 'update'])->name('reward-update');
     Route::delete('/delete-reward/{id}', [RewardCommissionController::class, 'destroy'])->name('delete-reward');
     Route::post('/reward/filter', [RewardCommissionController::class, 'filter'])->name('reward-filter');
-
-
-    
-
 });
 
 require __DIR__.'/auth.php';

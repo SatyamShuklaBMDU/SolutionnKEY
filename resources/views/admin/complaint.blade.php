@@ -97,6 +97,7 @@
                                             <th>S No.</th>
                                             <th> Date</th>
                                             <th> Name</th>
+                                            <th>Customer Id</th>
                                             <th>Subject</th>
                                             <th>Message</th>
                                             {{-- <th>User Name</th> --}}
@@ -110,6 +111,7 @@
                                                 <td>{{ \Carbon\Carbon::parse($user->created_at)->format('d M,Y') }}
                                                 </td>
                                                 <td>{{ $user->customer->name }}</td>
+                                                <td>CUST1234</td>
                                                 <td>{{ $user->message }}</td>
                                                 <td>{{ $user->subject }}</td>
                                                 <td class="action">

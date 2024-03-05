@@ -97,18 +97,19 @@
                                         <thead>
                                             <tr>
                                                 <th>S No.</th>
-                                                <th> Date</th>
+                                                <th>Date</th>
                                                 <th> Customer Name</th>
+                                                <th> Customer ID</th>
                                                 <th>Referral Name</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($referrals as $referral)
-                                           <tr class="odd text-center" data-user-id="{{ $referral->id }}">
+                                           <tr class="odd " data-user-id="{{ $referral->id }}">
                                                     <td class="sorting_1">{{ $loop->iteration }}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($referral->created_at)->format('d M,Y') }}
-                                                    </td>
+                                                    <td>{{ \Carbon\Carbon::parse($referral->created_at)->format('d M,Y') }}</td>
                                                     <td>{{ $referral->fromcustomer->name }}</td>
+                                                    <td>Cust1234</td>
                                                     <td>{{ $referral->tocustomer->name }}</td>
                                                 </tr>
                                             @endforeach
@@ -153,12 +154,12 @@
                         data: {
                             id: serviceId
                         },
-                        headers: {
+                        headers: { 
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         success: function(response) {
                             alert('Service deleted successfully');
-                            location.reload(); // Reload the page after deletion
+                            location.reload();
                         },
                         error: function(xhr, status, error) {
                             alert('Error deleting service: ' + error);

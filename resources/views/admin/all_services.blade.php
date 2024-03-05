@@ -86,6 +86,10 @@
                                     <a class="btn text-white shadow-lg" href="{{ route('service') }}"
                                         style="background-color:#033496;">Reset</a>
                                 </div>
+                                <div class="col-md-1 text-end float-end "  style="margin-right: 30px; margin-top: 47px;">
+                                    <a class="btn text-white shadow-lg" href="{{ route('service-create') }}"
+                                        style="background-color:#0d9603;">Create New Service</a>
+                                </div>
                             </form>
                         </div>
                         <!-- Table -->

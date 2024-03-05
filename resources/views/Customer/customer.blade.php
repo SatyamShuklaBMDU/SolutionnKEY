@@ -132,6 +132,7 @@
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ date('d-m-Y', strtotime($customers->created_at)) }}</td>
                                                     <td>{{ $customers->name }}</td>
+                                                    <td>CUST1234</td>
                                                     <td>{{ $customers->phone_number }}</td>
                                                     <td>{{ $customers->email }}</td>
                                                     <td>{{ $customers->dob }}</td>

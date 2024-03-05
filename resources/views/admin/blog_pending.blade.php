@@ -84,10 +84,10 @@
                                         <thead>
                                             <tr>
                                                 <th>S no.</th>
+                                                <th>Media</th>
                                                 <th>Posting Date</th>
                                                 <th>Person</th>
                                                 <th>Content</th>
-                                                <th>Media</th>
                                                 <th>Status</th>
                                                 <th>Remark</th>
                                             </tr>
@@ -96,10 +96,10 @@
                                             @foreach ($blog as $blogs)
                                                 <tr data-blog-id="{{ $blogs->id }}">
                                                     <td>{{ $loop->iteration }}</td>
+                                                    <td><img src="{{ asset($blogs->blog_media) }}" width="100px" height="100px" alt=""></td>
                                                     <td>{{ date('d-m-Y', strtotime($blogs->created_at)) }}</td>
                                                     <td>{{ $blogs->vendor->name }}</td>
                                                     <td>{{ $blogs->content }}</td>
-                                                    <td><img src="{{ asset($blogs->blog_media) }}" width="100px" alt=""></td>
                                                     <td>
                                                         <select class="form-select change-status-dropdown" data-blog-id="{{ $blogs->id }}">
                                                             <option value="" selected disabled>Choose</option>

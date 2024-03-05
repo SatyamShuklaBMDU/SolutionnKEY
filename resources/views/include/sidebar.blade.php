@@ -37,12 +37,12 @@
                     <i class="fa fa-address-book" style="color: #033496;"></i>
                     <span style="font-size: 13px;color: #033496;"><b>Service Management</b></span>
                 </a>
-                <ul>
+                {{-- <ul>
                     <li><a href="{{ route('service') }}"><span style="color: #033496;"> All Services</span></a></li>
-                </ul>
-                <ul>
+                </ul> --}}
+                {{-- <ul>
                     <li><a href="{{ route('service-create') }}"><span style="color: #033496;">Add Services</span></a></li>
-                </ul>
+                </ul> --}}
             </li>
             @endif
             @if(auth()->check() && auth()->user()->hasPermission('professionalmanagement'))

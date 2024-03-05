@@ -51,10 +51,10 @@ Route::middleware('auth')->group(function () {
     });
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::middleware(['auth', 'permission:customermanagement'])->group(function () {
-    Route::get('/customer/show',[CustomerController::class,'show'])->name('customer-show');
-    Route::post('/change-account-status', [CustomerController::class,'changeAccountStatus'])->name('change.account.status');
-    Route::post('/customer/filter',[CustomerController::class,'filter'])->name('customer-filter');
-    Route::delete('/delete-customer/{id}', [CustomerController::class, 'destroy'])->name('delete-customer');
+        Route::get('/customer/show',[CustomerController::class,'show'])->name('customer-show');
+        Route::post('/change-account-status', [CustomerController::class,'changeAccountStatus'])->name('change.account.status');
+        Route::post('/customer/filter',[CustomerController::class,'filter'])->name('customer-filter');
+        Route::delete('/delete-customer/{id}', [CustomerController::class, 'destroy'])->name('delete-customer');
     });
     Route::middleware(['auth', 'permission:professionalmanagement'])->group(function () {
         Route::get('/vendor/show',[VendorController::class,'show'])->name('vendor-show');

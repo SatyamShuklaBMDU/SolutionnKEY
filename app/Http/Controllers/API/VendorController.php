@@ -48,11 +48,14 @@ class VendorController extends Controller
                 $coverPicture->move(public_path('vendor_cover_pic'), $coverPicturePath);
                 $coverPicturePath = 'vendor_cover_pic' . '/' . $coverPicturePath;
             }
+            $randomDigits = mt_rand(10000, 99999);
+            $vendorid = 'VEND' . $randomDigits;
             $vendor = new Vendor();
             $vendor->fill($request->all());
             $vendor->password = Hash::make($request->input('password'));
             $vendor->profile_picture = $profilePicturePath;
             $vendor->cover_picture = $coverPicturePath;
+            $vendor->vendor_id = $vendorid;
             $vendor->save();
             return response()->json(['message' => 'Vendor registered successfully', 'data' => $vendor], 201);
         } catch (ValidationException $e) {

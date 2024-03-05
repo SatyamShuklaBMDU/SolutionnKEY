@@ -47,7 +47,9 @@ class CustomerController extends Controller
             }
             $randomDigits = mt_rand(10000, 99999);
             $referralCode = 'SOLU' . $randomDigits;
+            $CustomerId = 'CUST' . $randomDigits;
             $validatedData['refer_code'] = $referralCode;
+            $validatedData['customers_id'] = $CustomerId;
             $customer = Customer::create($validatedData);
             if ($request->has('from_referral_number') && !empty($request->from_referral_number)) {
                 if ($this->isValidReferralNumber($request->from_referral_number)) {
@@ -144,17 +146,6 @@ class CustomerController extends Controller
             }
             $description = $request->document_description;
             $documents = [];
-            // dd($request->documents_images);
-            // if ($file = $request->file('documents_images')) {
-            //     $fileName = $file->getClientOriginalName();
-            //     $file->move(public_path('customer_doc'), $fileName);
-            //     $document = new CustomerDocument();
-            //     $document->documents_images = 'customer_doc/' . $fileName;
-            //     $document->document_description = $description;
-            //     $document->customer_id = $request->customer_id;
-            //     $document->save();
-            //     $documents[] = $document;
-            // }
             foreach ($request->file('documents_images') as $file) {
                 if ($file->isValid()) {
                     $fileName = $file->getClientOriginalName();

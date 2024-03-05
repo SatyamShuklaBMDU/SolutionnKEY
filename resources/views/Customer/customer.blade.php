@@ -67,7 +67,7 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-12 ">
                         <div class="row mb" style="margin-bottom: 30px; margin-left: 5px;">
-                            <form action="{{ route('customer-filter') }}" method="post">
+                        <form action="{{ route('customer-filter') }}" method="post">
                                 @csrf
                                 <div class="col-sm-1">
                                     <p class="text-dark">

@@ -69,35 +69,7 @@
                         <div class="row mb" style="margin-bottom: 30px; margin-left: 5px;">
                             <form action="{{ route('blog-pending-filter') }}" method="post">
                                 @csrf
-                                <div class="col-sm-1">
-                                    <p class="text-dark">
-                                        <b>
-                                            <strong>Filters:</strong>
-                                        </b>
-                                    </p>
-                                </div>
-                                <div class="col-sm-3 end-date">
-                                    <p class="text-dark">
-                                        <strong>Date From:</strong>
-                                    </p>
-                                    <div class="input-group date d-flex">
-                                        <input type="date" class="form-control" name="start" id="datepickerFrom"
-                                            value="{{ $start ?? '' }}" placeholder="dd-mm-yyyy">
-                                    </div>
-                                </div>
-                                <div class="col-sm-3 end-date">
-                                    <p class="text-dark">
-                                        <strong>Date To:</strong>
-                                    </p>
-                                    <div class="input-group date d-flex">
-                                        <input type="date" class="form-control" name="end" id="datepickerTo"
-                                            value="{{ $end ?? '' }}" placeholder="dd-mm-yyyy">
-                                    </div>
-                                </div>
-                                <div class="col-md-1 text-end" style="margin-left: 10px; margin-top: 47px;">
-                                    <button class="btn text-white shadow-lg" type="submit"
-                                        style="background-color:#033496;">Filter</button>
-                                </div>
+                                @include('admin.date')
                                 <div class="col-md-1 text-end" style="margin-left: 10px; margin-top: 47px;">
                                     <a class="btn text-white shadow-lg" href="{{ route('blog-pending') }}"
                                         style="background-color:#033496;">Reset</a>
@@ -112,10 +84,10 @@
                                         <thead>
                                             <tr>
                                                 <th>S no.</th>
+                                                <th>Media</th>
                                                 <th>Posting Date</th>
                                                 <th>Person</th>
                                                 <th>Content</th>
-                                                <th>Media</th>
                                                 <th>Status</th>
                                                 <th>Remark</th>
                                             </tr>
@@ -124,10 +96,10 @@
                                             @foreach ($blog as $blogs)
                                                 <tr data-blog-id="{{ $blogs->id }}">
                                                     <td>{{ $loop->iteration }}</td>
+                                                    <td><img src="{{ asset($blogs->blog_media) }}" width="100px" height="100px" alt=""></td>
                                                     <td>{{ date('d-m-Y', strtotime($blogs->created_at)) }}</td>
                                                     <td>{{ $blogs->vendor->name }}</td>
                                                     <td>{{ $blogs->content }}</td>
-                                                    <td><img src="{{ asset($blogs->blog_media) }}" width="100px" alt=""></td>
                                                     <td>
                                                         <select class="form-select change-status-dropdown" data-blog-id="{{ $blogs->id }}">
                                                             <option value="" selected disabled>Choose</option>

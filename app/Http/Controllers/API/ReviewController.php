@@ -46,4 +46,6 @@ class ReviewController extends Controller
             return response()->json(['error' => 'Something went wrong'], 500);
         }
     }
+
+    
 }

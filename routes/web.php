@@ -96,22 +96,23 @@ Route::middleware('auth')->group(function () {
     Route::post('/fimily/filter', [FamilyController::class, 'filter'])->name('family-filter');
     //Booking Controller 
     Route::get('/online/booking', [BookingController::class, 'online_booking'])->name('online-booking');
+    Route::post('/online/filter', [BookingController::class, 'online_filter'])->name('online-filter');
     Route::get('/physical/booking', [BookingController::class, 'physical_booking'])->name('physical-booking');
+    Route::post('/physical/filter', [BookingController::class, 'physical_filter'])->name('physical-filter');
     //Referral Controller
     Route::get('/Referral/Earning', [ReferralController::class, 'index'])->name('referral-earning');
+    Route::post('/Referral/filter', [ReferralController::class, 'filter'])->name('referral-filter');
     // Controller
     Route::get('/review/Rating', [ReviewController::class, 'index'])->name('reviews-rating');
+    Route::post('/review/filter', [ReviewController::class, 'filter'])->name('review-filter');
     //Reward And Commission Route
     Route::get('/reward/commission', [RewardCommissionController::class, 'index'])->name('reward-commission');
     Route::get('/reward/commission/create', [RewardCommissionController::class, 'create'])->name('reward-create');
-    Route::post('/reward/commission/create', [RewardCommissionController::class, 'store'])->name('reward-store');
+    Route::post('/reward/commission/store', [RewardCommissionController::class, 'store'])->name('reward-store');
     Route::get('/reward/commission/edit/{reward}', [RewardCommissionController::class, 'edit'])->name('reward-edit');
     Route::put('/reward/commission/{service}', [RewardCommissionController::class, 'update'])->name('reward-update');
+    Route::post('/reward/filter', [RewardCommissionController::class, 'filter'])->name('reward-filter');
     Route::get('/delete-reward/{id}', [RewardCommissionController::class, 'destroy'])->name('delete-reward');
-    
-
-    
-
 });
 
 require __DIR__.'/auth.php';

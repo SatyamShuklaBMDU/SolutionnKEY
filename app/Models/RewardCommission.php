@@ -12,5 +12,6 @@ class RewardCommission extends Model
     protected $fillable = [
         'reward_type',
         'reward_amount',
+        'status'
     ];
 }

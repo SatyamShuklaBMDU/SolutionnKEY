@@ -39,6 +39,10 @@ class BlogController extends Controller
     }
     public function Pendingfilter(Request $request)
     {
+        $request->validate([
+            'start' => 'required|date',
+            'end' => 'required|date|after_or_equal:start',
+        ]);
         $start = $request->start;
         $end = $request->end;
         $blog = ManagerBlog::where('status','-1')
@@ -50,6 +54,10 @@ class BlogController extends Controller
     }
     public function Approvefilter(Request $request)
     {
+        $request->validate([
+            'start' => 'required|date',
+            'end' => 'required|date|after_or_equal:start',
+        ]);
         $start = $request->start;
         $end = $request->end;
         $blog = ManagerBlog::where('status','1')

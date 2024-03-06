@@ -67,35 +67,7 @@
                         <div class="row mb" style="margin-bottom: 30px; margin-left: 5px;">
                             <form action="{{ route('vendor-filter') }}" method="post">
                                 @csrf
-                                <div class="col-sm-1">
-                                    <p class="text-dark">
-                                        <b>
-                                            <strong>Filters:</strong>
-                                        </b>
-                                    </p>
-                                </div>
-                                <div class="col-sm-3 end-date">
-                                    <p class="text-dark">
-                                        <strong>Date From:</strong>
-                                    </p>
-                                    <div class="input-group date d-flex">
-                                        <input type="date" class="form-control" name="start" id="datepickerFrom"
-                                            value="{{ $start ?? '' }}" placeholder="dd-mm-yyyy">
-                                    </div>
-                                </div>
-                                <div class="col-sm-3 end-date">
-                                    <p class="text-dark">
-                                        <strong>Date To:</strong>
-                                    </p>
-                                    <div class="input-group date d-flex">
-                                        <input type="date" class="form-control" name="end" id="datepickerTo"
-                                            value="{{ $end ?? '' }}" placeholder="dd-mm-yyyy">
-                                    </div>
-                                </div>
-                                <div class="col-md-1 text-end" style="margin-left: 10px; margin-top: 47px;">
-                                    <button class="btn text-white shadow-lg" type="submit"
-                                        style="background-color:#033496;">Filter</button>
-                                </div>
+                               @include('admin.date')
                                 <div class="col-md-1 text-end" style="margin-left: 10px; margin-top: 47px;">
                                     <a class="btn text-white shadow-lg" href="{{ route('vendor-show') }}"
                                         style="background-color:#033496;">Reset</a>
@@ -111,6 +83,9 @@
                                             <tr>
                                                 <th>S no.</th>
                                                 <th>Registration Date</th>
+                                                <th>Vendor Profile</th>
+                                                <th>Vendor Cover</th>
+                                                <th>Vendor Id</th>
                                                 <th>Name</th>
                                                 <th>Whatsapp number</th>
                                                 <th>Email</th>
@@ -121,8 +96,6 @@
                                                 <th>Current Job</th>
                                                 <th>Adhar Number</th>
                                                 <th>Pan Number</th>
-                                                <th>Vendor Profile</th>
-                                                <th>Vendor Cover</th>
                                                 <th>Action</th>
                                                 <th>Remark</th>
                                             </tr>
@@ -132,6 +105,9 @@
                                                 <tr data-vendor-id="{{ $vendors->id }}">
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ date('d-m-Y', strtotime($vendors->created_at)) }}</td>
+                                                    <td><img src="{{ asset($vendors->profile_picture) }}" width="100px" height="100px" alt=""></td>
+                                                    <td><img src="{{ asset($vendors->cover_picture) }}" width="100px" height="100px" alt=""></td>
+                                                    <td>{{ $vendors->vendor_id }}</td>
                                                     <td>{{ $vendors->name }}</td>
                                                     <td>{{ $vendors->whatsapp_number }}</td>
                                                     <td>{{ $vendors->email }}</td>
@@ -142,8 +118,6 @@
                                                     <td>{{ $vendors->current_job }}</td>
                                                     <td>{{ $vendors->adhar_number }}</td>
                                                     <td>{{ $vendors->pancard }}</td>
-                                                    <td><img src="{{ asset($vendors->profile_picture) }}" width="100px" height="100px" alt=""></td>
-                                                    <td><img src="{{ asset($vendors->cover_picture) }}" width="100px" height="100px" alt=""></td>
                                                     <td>
                                                         <select class="form-select change-status-dropdown" data-vendor-id="{{ $vendors->id }}">
                                                             <option value="1" {{ $vendors->account_status == 1 ? 'selected' : '' }}>Activate</option>

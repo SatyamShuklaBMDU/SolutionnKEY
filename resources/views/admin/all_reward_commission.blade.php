@@ -86,17 +86,16 @@
                                     <a class="btn text-white shadow-lg" href="{{ route('reward-commission') }}"
                                         style="background-color:#033496;">Reset</a>
                                 </div>
+                                <div class="col-md-1 text-end float-end "  style="margin-right: 30px; margin-top: 47px;">
+                                    <a class="btn text-white shadow-lg" href="{{ route('reward-create') }}"
+                                        style="background-color:#0d9603;">Create New Reward</a>
+                                </div>
                             </form>
                         </div>
                         
                  <!-- Table -->
                         <div class="card">
                             <div class="card-body">
-                                <div class=" text-end">
-                                   <h1>
-                                    <button type="button" class="btn btn-outline-info text-dark border-50 mb-3"><a href="{{ route('reward-create') }}"> Create new reward</a></button>
-                                    </h1> 
-                                </div>
                                 <table id="customerTable" class="display nowrap" style="width:100%">
                                     <thead>
                                         <tr>

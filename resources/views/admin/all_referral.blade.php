@@ -99,8 +99,9 @@
                                                 <th>S No.</th>
                                                 <th>Date</th>
                                                 <th> Customer Name</th>
-                                                <th> Customer ID</th>
+                                                {{-- <th> Customer ID</th> --}}
                                                 <th>Referral Name</th>
+                                                {{-- <th> Customer ID</th> --}}
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -108,9 +109,10 @@
                                            <tr class="odd " data-user-id="{{ $referral->id }}">
                                                     <td class="sorting_1">{{ $loop->iteration }}</td>
                                                     <td>{{ \Carbon\Carbon::parse($referral->created_at)->format('d M,Y') }}</td>
-                                                    <td>{{ $referral->fromcustomer->name }}</td>
-                                                    <td>Cust1234</td>
-                                                    <td>{{ $referral->tocustomer->name }}</td>
+                                                    <td>{{ $referral->fromcustomer->name }} <b>({{ $referral->fromcustomer->customers_id }})</b></td>
+                                                    {{-- <td>{{ $referral->fromcustomer->customers_id }}</td> --}}
+                                                    <td>{{ $referral->tocustomer->name }} <b>({{ $referral->tocustomer->customers_id }})</b></td>
+                                                    {{-- <td>{{ $referral->tocustomer->customers_id }}</td> --}}
                                                 </tr>
                                             @endforeach
                                         </tbody>

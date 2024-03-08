@@ -115,9 +115,8 @@
                                             @foreach ($customer_families as $family)
                                                 <tr class="odd" data-user-id="{{ $family->id }}">
                                                     <td class="sorting_1">{{ $loop->iteration }}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($family->created_at)->format('d M,Y') }}
-                                                    </td>
-                                                    <td>{{ $family->customer->name }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($family->created_at)->format('d M,Y') }}</td>
+                                                    <td>{{ $family->customer->name }} <b>({{ $family->customer->customers_id }})</b></td>
                                                     <td>{{ $family->name }}</td>
                                                     <td>{{ $family->gender }}</td>
                                                     <td>{{ \Carbon\Carbon::parse($family->dob)->format('d M,Y') }}

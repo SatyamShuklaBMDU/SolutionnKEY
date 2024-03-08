@@ -85,7 +85,8 @@
                                             <tr>
                                                 <th>S no.</th>
                                                 <th>Posting Date</th>
-                                                <th>Person</th>
+                                                <th>Person Id</th>
+                                                <th>Person Name</th>
                                                 <th>Content</th>
                                                 <th>Media</th>
                                                 <th>Status</th>
@@ -96,6 +97,7 @@
                                                 <tr data-blog-id="{{ $blogs->id }}">
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ date('d-m-Y', strtotime($blogs->created_at)) }}</td>
+                                                    <td>{{ $blogs->vendor->vendor_id }}</td>
                                                     <td>{{ $blogs->vendor->name }}</td>
                                                     <td>{{ $blogs->content }}</td>
                                                     <td><img src="{{ asset($blogs->blog_media) }}" width="50px" height="50px" alt=""></td>

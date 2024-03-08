@@ -113,7 +113,7 @@
                                         style="width: 200px; height: 150px;">
                                 </div>
                             @endif
-                            <button type="submit" class="btn btn-info text-danger  btn text-bold shadow btn-lg " style="margin:30px 0px 0px;"><a href="{{ route('service') }}">Back</a></button>
+                            <button type="submit" class="btn btn-info text-danger   text-bold shadow btn-lg " style="margin:30px 0px 0px;"><a href="{{ route('service') }}">Back</a></button>
                             <button type="submit" class="btn btn-dark btn-lg" style="margin:30px 0px 0px;">Submit</button>
                         </form>
                     </div>

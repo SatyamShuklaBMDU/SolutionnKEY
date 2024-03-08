@@ -96,7 +96,8 @@
                                         <tr>
                                             <th>S No.</th>
                                             <th> Date</th>
-                                            <th> Name</th>
+                                            <th>Customer Id</th>
+                                            <th>Customer Name</th>
                                             <th>Subject</th>
                                             <th>Message</th>
                                             {{-- <th>User Name</th> --}}
@@ -109,6 +110,7 @@
                                                 <td  class="sorting_1">{{ $loop->iteration }}</td>
                                                 <td>{{ \Carbon\Carbon::parse($user->created_at)->format('d M,Y') }}
                                                 </td>
+                                                <td>{{ $user->customer->customers_id }}</td>
                                                 <td>{{ $user->customer->name }}</td>
                                                 <td>{{ $user->message }}</td>
                                                 <td>{{ $user->subject }}</td>

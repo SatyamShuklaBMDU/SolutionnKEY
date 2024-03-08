@@ -98,8 +98,10 @@
                                             <tr>
                                                 <th>S No.</th>
                                                 <th> Date</th>
+                                                <th> Customer Id</th>
                                                 <th> Customer Name</th>
-                                                <th>Vendor</th>
+                                                <th>Vendor Id</th>
+                                                <th>Vendor Name</th>
                                                 <th>Perferred Date 1</th>
                                                 <th>Perferred Date 2</th>
                                                 <th>Comminication Mode</th>
@@ -113,7 +115,9 @@
                                                     <td class="sorting_1">{{ $loop->iteration }}</td>
                                                     <td>{{ \Carbon\Carbon::parse($online_booking->created_at)->format('d M,Y') }}
                                                     </td>
+                                                    <td>{{ $online_booking->customer->customers_id }}</td>
                                                     <td>{{ $online_booking->customer->name }}</td>
+                                                    <td>{{ $online_booking->vendor->vendor_id }}</td>
                                                     <td>{{ $online_booking->vendor->name }}</td>
                                                     <td>
                                                         {{ \Carbon\Carbon::parse($online_booking->perferred_date_1)->format('d M, Y') }} 

@@ -82,36 +82,8 @@
                         <div class="row mb" style="margin-bottom: 30px; margin-left: 5px;">
                             <form action="{{ route('review-filter') }}" method="post">
                                 @csrf
-                                <div class="col-sm-1">
-                                    <p class="text-dark">
-                                        <b>
-                                            <strong>Filters:</strong>
-                                        </b>
-                                    </p>
-                                </div>
-                                <div class="col-sm-3 end-date">
-                                    <p class="text-dark">
-                                        <strong>Date From:</strong>
-                                    </p>
-                                    <div class="input-group date d-flex">
-                                        <input type="date" class="form-control" name="start" id="datepickerFrom"
-                                            value="{{ $start ?? '' }}" placeholder="dd-mm-yyyy">
-                                    </div>
-                                </div>
-                                <div class="col-sm-3 end-date">
-                                    <p class="text-dark">
-                                        <strong>Date To:</strong>
-                                    </p>
-                                    <div class="input-group date d-flex">
-                                        <input type="date" class="form-control" name="end" id="datepickerTo"
-                                            value="{{ $end ?? '' }}" placeholder="dd-mm-yyyy">
-                                    </div>
-                                </div>
-                                <div class="col-md-1 text-end" style="margin-left: 10px; margin-top: 47px;">
-                                    <button class="btn text-white shadow-lg" type="submit"
-                                        style="background-color:#033496;">Filter</button>
-                                </div>
-                                <div class="col-md-1 text-end" style="margin-left: 10px; margin-top: 47px;">
+                               @include('admin.date')
+                                    <div class="col-md-1 text-end" style="margin-left: 10px; margin-top: 47px;">
                                     <a class="btn text-white shadow-lg" href="{{ route('reviews-rating') }}"
                                         style="background-color:#033496;">Reset</a>
                                 </div>
@@ -126,7 +98,9 @@
                                             <tr>
                                                 <th>S No.</th>
                                                 <th> Date</th>
+                                                <th>Customer Id</th>
                                                 <th>Customer Name</th>
+                                                <th>Vendor Id</th>
                                                 <th>Vendor Name</th>
                                                 <th>Rating</th>
                                                 <th>Content</th>
@@ -142,7 +116,9 @@
                                                     <td class="sorting_1">{{ $loop->iteration }}</td>
                                                     <td>{{ \Carbon\Carbon::parse($reviews->created_at)->format('d M,Y') }}
                                                     </td>
+                                                    <td>{{ $reviews->customer->customers_id }}</td>
                                                     <td>{{ $reviews->customer->name }}</td>
+                                                    <td>{{ $reviews->vendor->vendor_id }}</td>
                                                     <td>{{ $reviews->vendor->name }}</td>
                                                     <td>{{ $reviews->rating }}</td>
                                                     <td>{{ $reviews->content }}</td>

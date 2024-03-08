@@ -95,9 +95,10 @@
                                     <thead>
                                         <tr>
                                             <th>S No.</th>
-                                            <th>Image</th>
                                             <th> Date</th>
+                                            <th>Customer Id</th>
                                             <th>Name</th>
+                                            <th>Image</th>
                                             <th>Document Description</th>
                                             {{-- <th>Action</th> --}}
                                         </tr>
@@ -106,29 +107,15 @@
                                         @foreach ($customer_documents as $document)
                                             <tr class="odd" data-user-id="{{ $document->id }}">
                                                 <td class="sorting_1">{{ $loop->iteration }}</td>
-                                                @if ($document->documents_images)
-                                                    <td><img class="rounded" src="{{ asset('/' . $document->documents_images) }}" alt="No Image" style="width: 100px; height: 70px;"  ></td>
-                                                @else
-                                                   <td> <p>No image available</p></td>
-                                                @endif
-
-                                                <td>{{ \Carbon\Carbon::parse($document->created_at)->format('d M,Y') }}
-                                                </td>
-                                                {{-- <td>{{ $document-> }}</td> --}}
-                                                <td>{{ $document->document_description }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($document->created_at)->format('d M,Y') }} </td>
+                                                <td>{{ $document->customer->customers_id}}</td>
                                                 <td>{{ $document->customer->name }}</td>
-                                                {{-- <td class="action">
-                                                    <button type="button" class="btn btn-outline-danger">
-                                                        <i class="fa fa-trash-o delete-location" data-service-id="{{ $document->id }}"
-                                                            style="padding-right: -10px;font-size: 17px;"></i>
-                                                    </button>
-                                                    <button type="button" class="btn btn-outline-danger">
-                                                        <a href="{{ route('services-edit', $document->id) }}">
-                                                            <i class="fa fa-pencil"
-                                                            style="padding-right: -10px;font-size: 17px;"></i>
-                                                        </a>
-                                                    </button>
-                                                </td> --}}
+                                                @if ($document->documents_images)
+                                                    <td><img class="rounded" src="{{ asset($document->documents_images) }}" alt="No Image" style="width: 100px; height: 70px;"></td>
+                                                @else
+                                                   <td><p>No image available</p></td>
+                                                @endif
+                                                <td>{{ $document->document_description }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>

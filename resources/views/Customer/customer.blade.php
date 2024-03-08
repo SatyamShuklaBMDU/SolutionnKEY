@@ -69,35 +69,7 @@
                         <div class="row mb" style="margin-bottom: 30px; margin-left: 5px;">
                         <form action="{{ route('customer-filter') }}" method="post">
                                 @csrf
-                                <div class="col-sm-1">
-                                    <p class="text-dark">
-                                        <b>
-                                            <strong>Filters:</strong>
-                                        </b>
-                                    </p>
-                                </div>
-                                <div class="col-sm-3 end-date">
-                                    <p class="text-dark">
-                                        <strong>Date From:</strong>
-                                    </p>
-                                    <div class="input-group date d-flex">
-                                        <input type="date" class="form-control" name="start" id="datepickerFrom"
-                                            value="{{ $start ?? '' }}" placeholder="dd-mm-yyyy">
-                                    </div>
-                                </div>
-                                <div class="col-sm-3 end-date">
-                                    <p class="text-dark">
-                                        <strong>Date To:</strong>
-                                    </p>
-                                    <div class="input-group date d-flex">
-                                        <input type="date" class="form-control" name="end" id="datepickerTo"
-                                            value="{{ $end ?? '' }}" placeholder="dd-mm-yyyy">
-                                    </div>
-                                </div>
-                                <div class="col-md-1 text-end" style="margin-left: 10px; margin-top: 47px;">
-                                    <button class="btn text-white shadow-lg" type="submit"
-                                        style="background-color:#033496;">Filter</button>
-                                </div>
+                                @include('admin.date')
                                 <div class="col-md-1 text-end" style="margin-left: 10px; margin-top: 47px;">
                                     <a class="btn text-white shadow-lg" href="{{ route('customer-show') }}"
                                         style="background-color:#033496;">Reset</a>
@@ -113,15 +85,16 @@
                                             <tr>
                                                 <th>S no.</th>
                                                 <th>Registration Date</th>
+                                                <th>Customer Profile</th>
+                                                <th>Customer ID</th>
                                                 <th>Name</th>
                                                 <th>Phone number</th>
                                                 <th>Email</th>
                                                 <th>DOB</th>
                                                 <th>Gender</th>
                                                 <th>Martial Status</th>
-                                                <th>City-State</th>
-                                                <th>Customer Profile</th>
                                                 <th>Address</th>
+                                                <th>City-State</th>
                                                 <th>Action</th>
                                                 <th>Remark</th>
                                             </tr>
@@ -131,16 +104,16 @@
                                                 <tr data-customer-id="{{ $customers->id }}">
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ date('d-m-Y', strtotime($customers->created_at)) }}</td>
+                                                    <td><img src="{{ asset($customers->profile_pic) }}" width="100px" alt=""></td>
+                                                    <td>{{ $customers->customers_id }}</td>
                                                     <td>{{ $customers->name }}</td>
-                                                    <td>CUST1234</td>
                                                     <td>{{ $customers->phone_number }}</td>
                                                     <td>{{ $customers->email }}</td>
                                                     <td>{{ $customers->dob }}</td>
                                                     <td>{{ $customers->gender }}</td>
                                                     <td>{{ $customers->marital_status }}</td>
-                                                    <td>{{ $customers->city }}-{{ $customers->state }}</td>
                                                     <td>{{ $customers->address }}</td>
-                                                    <td><img src="{{ asset($customers->profile_pic) }}" width="100px" alt=""></td>
+                                                    <td>{{ $customers->city }}-{{ $customers->state }}</td>
                                                     <td>
                                                         <select class="form-select change-status-dropdown" data-customer-id="{{ $customers->id }}">
                                                             <option value="1" {{ $customers->account_status == 1 ? 'selected' : '' }}>Activate</option>

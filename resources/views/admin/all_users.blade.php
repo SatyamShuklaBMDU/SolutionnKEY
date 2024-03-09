@@ -90,7 +90,7 @@
                         </div>
                         <!-- Table -->
                         <div class="card">
-                            <div class="card-body">
+                            <div class="card-body table-responsive">
                                 <table id="customerTable" class="display nowrap" style="width:100%">
                                     <thead>
                                         <tr>
@@ -169,8 +169,7 @@
                                                                                 <div class="form-group">
                                                                                     <label for="userRole">Role</label>
                                                                                     <input type="text" name="role"
-                                                                                        class="form-control"
-                                                                                        id="userRole"
+                                                                                        class="form-control" id="userRole"
                                                                                         aria-describedby="textHelp"
                                                                                         placeholder="Role">
                                                                                     @if ($errors->has('role'))
@@ -188,8 +187,7 @@
                                                                                                 type="checkbox"
                                                                                                 value="all"
                                                                                                 id="all"
-                                                                                                name="permission[]"
-                                                                                                checked>
+                                                                                                name="permission[]" checked>
                                                                                             <label class="form-check-label"
                                                                                                 for="all">
                                                                                                 All User
@@ -228,6 +226,20 @@
                                                                                             <label class="form-check-label"
                                                                                                 for="professionalmanagement">
                                                                                                 Professional Management
+                                                                                            </label>
+                                                                                        </div>
+                                                                                        <div class="form-check">
+                                                                                            <input class="form-check-input" type="checkbox" value="blogmanagement" id="blogmanagement"
+                                                                                                name="permission[]">
+                                                                                            <label class="form-check-label" for="blogmanagement">
+                                                                                                Blog Management
+                                                                                            </label>
+                                                                                        </div>
+                                                                                        <div class="form-check">
+                                                                                            <input class="form-check-input" type="checkbox" value="notifications" id="notifications"
+                                                                                                name="permission[]">
+                                                                                            <label class="form-check-label" for="notifications">
+                                                                                                Notification
                                                                                             </label>
                                                                                         </div>
                                                                                     </div>
@@ -291,6 +303,27 @@
                                                                                             <label class="form-check-label"
                                                                                                 for="complaint">
                                                                                                 Complaint
+                                                                                            </label>
+                                                                                        </div>
+                                                                                        <div class="form-check">
+                                                                                            <input class="form-check-input" type="checkbox" value="referral"
+                                                                                                id="referral" name="permission[]">
+                                                                                            <label class="form-check-label" for="referral">
+                                                                                                Referral & Earning
+                                                                                            </label>
+                                                                                        </div>
+                                                                                        <div class="form-check">
+                                                                                            <input class="form-check-input" type="checkbox" value="review"
+                                                                                                id="review" name="permission[]">
+                                                                                            <label class="form-check-label" for="review">
+                                                                                                Review & Rating
+                                                                                            </label>
+                                                                                        </div>
+                                                                                        <div class="form-check">
+                                                                                            <input class="form-check-input" type="checkbox" value="reward"
+                                                                                                id="reward" name="permission[]">
+                                                                                            <label class="form-check-label" for="reward">
+                                                                                                Reward & Commissions
                                                                                             </label>
                                                                                         </div>
                                                                                         <!-- <div class="col-md-4"> -->
@@ -418,28 +451,19 @@
                     $('#userName').val(data.name);
                     $('#userRole').val(data.role);
                     $('#userId').val(data.id);
-                    if (data.permission != null && data.permission != undefined) {
-                        let permissionData = JSON.parse(data.permission);
-                        if (permissionData != null && Array.isArray(permissionData)) {
-                            let permissionDataLength = permissionData.length;
-                            if (permissionDataLength > 0) {
-                                for (let i = 0; i < permissionDataLength; i++) {
-                                    console.log(permissionData[i]);
-                                    if (permissionData[i] == "all") {
-                                        $("#myModal input[type='checkbox']").prop("checked", true);
-                                    } else {
-                                        $(`#myModal input[type='checkbox']#${permissionData[i]}`).prop(
-                                            "checked", true);
-                                    }
-                                }
-                            }
-                            $('#myModal').modal('show');
-                        } else {
-                            console.error("Permission data is not an array.");
-                        }
+                    $('input[type="checkbox"]').prop("checked", false);
+                    // console.log(data.permission);
+                    var permissionArray = JSON.parse(data.permission);
+                    if (Array.isArray(permissionArray)) {
+                        permissionArray.forEach(function(permission) {
+                            console.log("Checking checkbox with ID:", permission);
+                            $("#" + permission).prop("checked", true);
+                        });
                     } else {
-                        console.error("Permission data is null or undefined.");
+                        console.error("Permission data is not an array or is missing.");
                     }
+
+                    $('#myModal').modal('show');
                 },
                 error: function(data) {
                     console.log(data);

@@ -105,7 +105,7 @@
                 </ul>
             </li>
             @endif
-            @if(auth()->check() && auth()->user()->hasPermission('notification'))
+            @if(auth()->check() && auth()->user()->hasPermission('notifications'))
             <li class="mm-active">
                 <a class="has-arrow" href="{{ route('notification') }}" aria-expanded="false">
                     <i class="fa fa-google-wallet" style="color: #033496;"></i>
@@ -125,7 +125,7 @@
                 </a>
             </li>
             @endif
-            @if(auth()->check() && auth()->user()->hasPermission('reviews'))
+            @if(auth()->check() && auth()->user()->hasPermission('review'))
             <li>
                 <a href="{{ route('reviews-rating') }}">
                     <i class="fa fa-exclamation" style="color: #033496;"></i>
@@ -149,7 +149,7 @@
                 </a>
             </li>
             @endif
-            @if(auth()->check() && auth()->user()->hasPermission('rewardscommission'))
+            @if(auth()->check() && auth()->user()->hasPermission('reward'))
             <li>
                 <a href="{{ route('reward-commission') }}">
                     <i class="fa fa-exclamation" style="color: #033496;"></i>

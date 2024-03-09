@@ -64,9 +64,9 @@ class UserController extends Controller
         $update = [
             'name' => $request->name,
             'role' => $request->role,
-            'permission' => json_encode($request->Permission),
+            'permission' => json_encode($request->permission),
         ];
-        // dd($request->all());
+        // dd($update);
         $userDataUpdate = User::where('id', $request->userId)->update($update);
         $updatedUserData = User::where('id', $request->userId)->first();
         return back()->with('success','Data Updated Successfully');

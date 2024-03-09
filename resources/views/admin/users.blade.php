@@ -119,6 +119,20 @@
                                         Professional Management
                                     </label>
                                 </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="blogmanagement" id="blogmanagement"
+                                        name="permission[]">
+                                    <label class="form-check-label" for="blogmanagement">
+                                        Blog Management
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="notifications" id="notifications"
+                                        name="permission[]">
+                                    <label class="form-check-label" for="notifications">
+                                        Notification
+                                    </label>
+                                </div>
                             </div>
                             <div class="col-md-12 d-flex justify-content-around ">
                                 <div class="form-check ">
@@ -157,6 +171,27 @@
                                         id="complaint" name="permission[]">
                                     <label class="form-check-label" for="complaint">
                                         Complaint
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="referral"
+                                        id="referral" name="permission[]">
+                                    <label class="form-check-label" for="referral">
+                                        Referral & Earning
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="review"
+                                        id="review" name="permission[]">
+                                    <label class="form-check-label" for="review">
+                                        Review & Rating
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="reward"
+                                        id="reward" name="permission[]">
+                                    <label class="form-check-label" for="reward">
+                                        Reward & Commissions
                                     </label>
                                 </div>
                                 <!-- <div class="col-md-4"> -->

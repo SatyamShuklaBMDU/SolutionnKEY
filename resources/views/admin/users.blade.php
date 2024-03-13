@@ -93,7 +93,7 @@
                             <div class="col-md-12  Modules d-flex justify-content-around">
                                 <div class="form-check" style="">
                                     <input class="form-check-input" type="checkbox" value="all" id="all"
-                                        name="permission[]" checked>
+                                        name="permission[]" >
                                     <label class="form-check-label" for="all">
                                         All User
                                     </label>

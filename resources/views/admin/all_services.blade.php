@@ -133,11 +133,17 @@
                                                     @endif
                                                 </td>
                                                 <td class="action">
-                                                    <button type="button" class="btn btn-outline-danger">
+                                                    {{-- <button type="button" class="btn btn-outline-danger">
                                                         <i class="fa fa-trash-o delete-location"
                                                             data-service-id="{{ $service->id }}"
                                                             style="padding-right: -10px;font-size: 17px;"></i>
+                                                    </button> --}}
+                                                    <button type="button" class="btn btn-outline-danger">
+                                                        <i class="fa fa-trash-o delete-location"
+                                                            data-service-id="{{ $service->id }}"
+                                                            style="padding-right: -10px; font-size: 17px;"></i>
                                                     </button>
+                                                    
                                                     <button type="button" class="btn btn-outline-danger">
                                                         <a href="{{ route('services-edit', $service->id) }}">
                                                             <i class="fa fa-pencil"
@@ -175,7 +181,7 @@
             });
         });
     </script>
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             $('.delete-location').click(function(event) {
                 event.preventDefault();
@@ -201,7 +207,41 @@
                 }
             });
         });
+    </script> --}}
+    <button type="button" class="btn btn-outline-danger">
+        <i class="fa fa-trash-o delete-location"
+            data-service-id="{{ $service->id }}"
+            style="padding-right: -10px; font-size: 17px;"></i>
+    </button>
+    
+    <script>
+        $(document).ready(function() {
+            $('.delete-location').click(function(event) {
+                event.preventDefault();
+                var serviceId = $(this).data('service-id');
+                if (confirm('Are you sure you want to delete this service?')) {
+                    $.ajax({
+                        url: 'delete-service/' + serviceId,
+                        type: 'DELETE',
+                        data: {
+                            id: serviceId
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(response) {
+                            alert('Service deleted successfully');
+                            location.reload(); // Reload the page after deletion
+                        },
+                        error: function(xhr, status, error) {
+                            alert('Error deleting service: ' + error);
+                        }
+                    });
+                }
+            });
+        });
     </script>
+    
 
     <script>
         $(document).ready(function() {

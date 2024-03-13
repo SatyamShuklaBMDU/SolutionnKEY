@@ -71,4 +71,15 @@ class UserController extends Controller
         $updatedUserData = User::where('id', $request->userId)->first();
         return back()->with('success','Data Updated Successfully');
     }
+
+    public function destroy($id)
+    {
+        try {
+            $customer = User::findOrFail($id);
+            $customer->delete();
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
 }

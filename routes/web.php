@@ -48,13 +48,18 @@ Route::middleware('auth')->group(function () {
         Route::get('/all-user', [UserController::class, 'alluser'])->name('all-users');
         Route::post('/user/filter',[UserController::class,'filter'])->name('user-filter');
         Route::post('/user-store', [UserController::class, 'user_store'])->name('users-store');
+        Route::delete('/delete-user/{id}', [UserController::class, 'destroy'])->name('delete-user');
+
+
     });
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::middleware(['auth', 'permission:customermanagement'])->group(function () {
         Route::get('/customer/show',[CustomerController::class,'show'])->name('customer-show');
         Route::post('/change-account-status', [CustomerController::class,'changeAccountStatus'])->name('change.account.status');
         Route::post('/customer/filter',[CustomerController::class,'filter'])->name('customer-filter');
-        Route::delete('/delete-customer/{id}', [CustomerController::class, 'destroy'])->name('delete-customer');
+        // Route::delete('/delete-customer/{id}', [CustomerController::class, 'deletedestroy'])->name('delete.customer');
+        // Route::delete('/delete-customer/{id}', 'CustomerController@deleteCustomer')->name('delete.customer');
+
     });
     Route::middleware(['auth', 'permission:professionalmanagement'])->group(function () {
         Route::get('/vendor/show',[VendorController::class,'show'])->name('vendor-show');

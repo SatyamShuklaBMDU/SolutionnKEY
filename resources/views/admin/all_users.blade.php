@@ -126,9 +126,14 @@
                                                 @endphp
                                                 <td>{{ $allpermission }}</td>
                                                 <td class="action">
-                                                    <button type="button" class="btn btn-outline-danger">
+                                                    {{-- <button type="button" class="btn btn-outline-danger">
                                                         <i class="fa fa-trash-o delete-location"
                                                             style="padding-right: -10px;font-size: 17px;"></i>
+                                                    </button> --}}
+                                                    <button type="button" class="btn btn-outline-danger">
+                                                        <i class="fa fa-trash-o delete-location"
+                                                            data-user-id="{{ $user->id }}"
+                                                            style="padding-right: -10px; font-size: 17px;"></i>
                                                     </button>
                                                     <button type="button" class="btn btn-outline-danger"
                                                         onclick="showModal(this)" id="{{ $user->id }}">
@@ -187,7 +192,8 @@
                                                                                                 type="checkbox"
                                                                                                 value="all"
                                                                                                 id="all"
-                                                                                                name="permission[]" checked>
+                                                                                                name="permission[]"
+                                                                                                checked>
                                                                                             <label class="form-check-label"
                                                                                                 for="all">
                                                                                                 All User
@@ -229,16 +235,24 @@
                                                                                             </label>
                                                                                         </div>
                                                                                         <div class="form-check">
-                                                                                            <input class="form-check-input" type="checkbox" value="blogmanagement" id="blogmanagement"
+                                                                                            <input class="form-check-input"
+                                                                                                type="checkbox"
+                                                                                                value="blogmanagement"
+                                                                                                id="blogmanagement"
                                                                                                 name="permission[]">
-                                                                                            <label class="form-check-label" for="blogmanagement">
+                                                                                            <label class="form-check-label"
+                                                                                                for="blogmanagement">
                                                                                                 Blog Management
                                                                                             </label>
                                                                                         </div>
                                                                                         <div class="form-check">
-                                                                                            <input class="form-check-input" type="checkbox" value="notifications" id="notifications"
+                                                                                            <input class="form-check-input"
+                                                                                                type="checkbox"
+                                                                                                value="notifications"
+                                                                                                id="notifications"
                                                                                                 name="permission[]">
-                                                                                            <label class="form-check-label" for="notifications">
+                                                                                            <label class="form-check-label"
+                                                                                                for="notifications">
                                                                                                 Notification
                                                                                             </label>
                                                                                         </div>
@@ -306,23 +320,35 @@
                                                                                             </label>
                                                                                         </div>
                                                                                         <div class="form-check">
-                                                                                            <input class="form-check-input" type="checkbox" value="referral"
-                                                                                                id="referral" name="permission[]">
-                                                                                            <label class="form-check-label" for="referral">
+                                                                                            <input class="form-check-input"
+                                                                                                type="checkbox"
+                                                                                                value="referral"
+                                                                                                id="referral"
+                                                                                                name="permission[]">
+                                                                                            <label class="form-check-label"
+                                                                                                for="referral">
                                                                                                 Referral & Earning
                                                                                             </label>
                                                                                         </div>
                                                                                         <div class="form-check">
-                                                                                            <input class="form-check-input" type="checkbox" value="review"
-                                                                                                id="review" name="permission[]">
-                                                                                            <label class="form-check-label" for="review">
+                                                                                            <input class="form-check-input"
+                                                                                                type="checkbox"
+                                                                                                value="review"
+                                                                                                id="review"
+                                                                                                name="permission[]">
+                                                                                            <label class="form-check-label"
+                                                                                                for="review">
                                                                                                 Review & Rating
                                                                                             </label>
                                                                                         </div>
                                                                                         <div class="form-check">
-                                                                                            <input class="form-check-input" type="checkbox" value="reward"
-                                                                                                id="reward" name="permission[]">
-                                                                                            <label class="form-check-label" for="reward">
+                                                                                            <input class="form-check-input"
+                                                                                                type="checkbox"
+                                                                                                value="reward"
+                                                                                                id="reward"
+                                                                                                name="permission[]">
+                                                                                            <label class="form-check-label"
+                                                                                                for="reward">
                                                                                                 Reward & Commissions
                                                                                             </label>
                                                                                         </div>
@@ -388,11 +414,11 @@
         $(document).ready(function() {
             $('.delete-location').click(function(event) {
                 event.preventDefault();
-                var CustomerId = $(this).closest('tr').attr('data-customer-id');
+                var userId = $(this).data('user-id');
                 if (confirm('Are you sure you want to delete this Number?')) {
                     $.ajax({
-                        url: '/delete-customer/' + CustomerId,
-                        type: 'DELETE',
+                        url: '/delete-user/' + userId,
+                        type: 'delete',
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
@@ -401,7 +427,7 @@
                             location.reload();
                         },
                         error: function(xhr, status, error) {
-                            alert('Error deleting Number:', error);
+                            alert('Error deleting Number: ' + error);
                         }
                     });
                 }

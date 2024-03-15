@@ -83,7 +83,7 @@
                                             <tr>
                                                 <th>S no.</th>
                                                 <th>Registration Date</th>
-                                                <th>Vendor Profile</th>
+                                                <th>Vendor Image</th>
                                                 <th>Vendor Cover</th>
                                                 <th>Vendor Id</th>
                                                 <th>Name</th>

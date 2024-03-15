@@ -27,10 +27,26 @@ class CustomerController extends Controller
             ->get();
         return view('Customer.customer', compact('customer', 'start', 'end'));
     }
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        Customer::destroy($id);
-        return response()->json(['message' => 'Status updated successfully']);
+        
+        // Customer::destroy($id);
+        // return response()->json(['message' => 'Status updated successfully']);
+        // Assuming 'Service' is your model representing services
+        $user = Customer::findOrFail($id);
+        $user->delete();
+
+        return response()->json(['message' => 'Service deleted successfully']);
+    }
+    public function deleteCustomer($id)
+    {
+        try {
+            $customer = Customer::findOrFail($id);
+            $customer->delete();
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
     }
     public function changeAccountStatus(Request $request)
     {

@@ -133,11 +133,17 @@
                                                     @endif
                                                 </td>
                                                 <td class="action">
-                                                    <button type="button" class="btn btn-outline-danger">
+                                                    {{-- <button type="button" class="btn btn-outline-danger">
                                                         <i class="fa fa-trash-o delete-location"
                                                             data-service-id="{{ $service->id }}"
                                                             style="padding-right: -10px;font-size: 17px;"></i>
+                                                    </button> --}}
+                                                    <button type="button" class="btn btn-outline-danger">
+                                                        <i class="fa fa-trash-o delete-location"
+                                                            data-service-id="{{ $service->id }}"
+                                                            style="padding-right: -10px; font-size: 17px;"></i>
                                                     </button>
+                                                    
                                                     <button type="button" class="btn btn-outline-danger">
                                                         <a href="{{ route('services-edit', $service->id) }}">
                                                             <i class="fa fa-pencil"
@@ -186,7 +192,7 @@
                         type: 'DELETE',
                         data: {
                             id: serviceId
-                        },Pe
+                        },
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
@@ -202,7 +208,6 @@
             });
         });
     </script>
-
     <script>
         $(document).ready(function() {
             $('#customerTable').DataTable({

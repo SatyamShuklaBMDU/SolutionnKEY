@@ -29,7 +29,6 @@ class CustomerController extends Controller
     }
     public function destroy(Request $request, $id)
     {
-        
         // Customer::destroy($id);
         // return response()->json(['message' => 'Status updated successfully']);
         // Assuming 'Service' is your model representing services

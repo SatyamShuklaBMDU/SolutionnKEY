@@ -63,9 +63,9 @@
                     <span style="font-size: 13px; color: #033496"><b>Customer Management</b></span>
                 </a>
                 <ul>
-                    <li><a href="{{route('customer-show')}}"><span style="color: #033496;">Customer Details</span></a></li>
-                    <li><a href="{{route('customer-document')}}"><span style="color: #033496;">Customer Documents</span></a></li>
-                    <li><a href="{{route('customer-family')}}"><span style="color: #033496;">Customer Family Details</span></a></li>
+                    <li><a href="{{ route('customer-show') }}"><span style="color: #033496;">Customer Details</span></a></li>
+                    <li><a href="{{ route('customer-document') }}"><span style="color: #033496;">Customer Documents</span></a></li>
+                    <li><a href="{{ route('customer-family') }}"><span style="color: #033496;">Customer Family Details</span></a></li>
                 </ul>
             </li>
             @endif

@@ -66,8 +66,8 @@
     <section class="main_content dashboard_part">
         <nav aria-label="breadcrumb" class="mb-5">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Review & Rating Management</a></li>
-                <li class="breadcrumb-item active" aria-current="page">All Review & Rating</li>
+                <li class="breadcrumb-item"><a href="#" style="text-decoration: none;color:#0d9603 !important;font-weight:600;font-size:20px;">Review & Rating Management</a></li>
+                <li class="breadcrumb-item active" aria-current="page" style="text-decoration: none;color:#033496;font-weight:600;font-size:18px;">All Review & Rating</li>
             </ol>
         </nav>
         @if (session()->has('success'))

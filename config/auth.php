@@ -75,6 +75,7 @@ return [
         'customers' => [
             'driver' => 'eloquent',
             'model' => App\Models\Customer::class,
+            'hash' => false,
         ],
         'vendor' => [
             'driver' => 'eloquent',

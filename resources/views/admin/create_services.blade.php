@@ -35,8 +35,8 @@
     <section class="main_content dashboard_part">
         <nav aria-label="breadcrumb" class="mb-5">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Services Management</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Add Services</li>
+                <li class="breadcrumb-item"><a href="#" style="text-decoration: none;color:#0d9603 !important;font-weight:600;font-size:20px;">Services Management</a></li>
+                <li class="breadcrumb-item active" aria-current="page" style="text-decoration: none;color:#033496;font-weight:600;font-size:18px;">Add Services</li>
             </ol>
         </nav>
         <div class="main_content_iner ">
@@ -50,12 +50,12 @@
                 </div>
             @endif
             <div class="container-fluid">
-                <div class="row dashboard-header" style="background: #e5e5e5;">
-                    <div class="row">
+                <div class="row dashboard-header" style="">
+                    {{--  <div class="row">
                         <div class="main-header">
                             <h3 class="my-2 pl-4">Manage Services</h3>
                         </div>
-                    </div>
+                    </div>  --}}
                     <div class="col-md-11  mx-auto">
                         <form class="notification-form shadow rounded"
                             action="{{ isset($service) ? route('services-update', $service->id) : route('services-store') }}"
@@ -69,7 +69,7 @@
                                 <input type="text" name="services_name"
                                     value="{{ old('services_name', isset($service) ? $service->services_name : '') }}"
                                     class="form-control" id="services_name" aria-describedby="textHelp"
-                                    placeholder="Please enter your service name">
+                                    placeholder="Please enter your service name" style="font-size: 15px;">
                                 @error('services_name')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -79,7 +79,7 @@
                                 <input type="text" name="description"
                                     value="{{ old('description', isset($service) ? $service->description : '') }}"
                                     class="form-control" id="description" aria-describedby="textHelp"
-                                    placeholder="Please enter your description">
+                                    placeholder="Please enter your description" style="font-size: 15px;">
                                 @error('description')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -87,7 +87,7 @@
                             @if (isset($service) && ($service->status === 1 || $service->status === 0))
                                 <div class="form-group">
                                     <label for="status">Status</label>
-                                    <select name="status" id="status" class="form-control">
+                                    <select name="status" id="status" class="form-control" style="font-size: 15px;">
                                         <option value="1"
                                             {{ old('status', $service->status) == '1' ? 'selected' : '' }}>Active
                                         </option>
@@ -100,7 +100,7 @@
                             <div class="form-group">
                                 <label for="image">Image</label>
                                 <div class="input-group">
-                                    <input type="file" class="form-control form-control-lg" id="image"
+                                    <input type="file" class="form-control form-control-lg" id="image" style="font-size: 15px;"
                                         name="image">
                                 </div>
                                 @error('image')
@@ -113,8 +113,8 @@
                                         style="width: 200px; height: 150px;">
                                 </div>
                             @endif
-                            <button type="submit" class="btn btn-info text-danger   text-bold shadow btn-lg " style="margin:30px 0px 0px;"><a href="{{ route('service') }}">Back</a></button>
-                            <button type="submit" class="btn btn-dark btn-lg" style="margin:30px 0px 0px;">Submit</button>
+                            <button type="submit" class="btn btn-info text-danger   text-bold shadow btn-lg " style="margin:30px 0px 0px;"><a href="{{ route('service') }}" style="text-decoration: none;color:white;font-weight:500">Back</a></button>
+                            <button type="submit" class="btn btn-success btn-lg" style="margin:30px 0px 0px;font-weight:500;">Submit</button>
                         </form>
                     </div>
                 </div>

@@ -37,7 +37,7 @@ class VendorController extends Controller
             return response()->json(['success' => false, 'message' => 'Customer not found'], 404);
         }
         $Vendor->account_status = $newStatus;
-        if ($newStatus == 0 && !empty($remark)) {
+        if ($newStatus == 2 && !empty($remark)) {
             $Vendor->deactivation_remark = $remark;
             $Vendor->deactivated_at = Carbon::now();
         }else {

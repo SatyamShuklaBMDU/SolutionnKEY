@@ -56,6 +56,7 @@ class VendorController extends Controller
             $vendor->profile_picture = $profilePicturePath;
             $vendor->cover_picture = $coverPicturePath;
             $vendor->vendor_id = $vendorid;
+            $vendor->account_status = '0';
             $vendor->save();
             return response()->json(['message' => 'Vendor registered successfully', 'data' => $vendor], 201);
         } catch (ValidationException $e) {
@@ -113,12 +114,22 @@ class VendorController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
-        if (Auth::guard('vendor')->attempt($credentials)) {
-            $vendor = Auth::guard('vendor')->user();
-            $token = $vendor->createToken('VendorAppToken')->plainTextToken;
-            return response()->json(['token' => $token], 200);
+        $vendor = Vendor::where('email', $request->email)->first();
+        if ($vendor) {
+            if ($vendor->account_status == '1') {
+                if (Auth::guard('vendor')->attempt($credentials)) {
+                    $vendor = Auth::guard('vendor')->user();
+                    $token = $vendor->createToken('VendorAppToken')->plainTextToken;
+                    return response()->json(['token' => $token , 'message' => 'Login Successfully.'], 200);
+                } else {
+                    return response()->json(['message' => 'Invalid credentials'], 401);
+                }
+            } else if ($vendor->account_status == '2') {
+                return response()->json(['message' => 'Login failed'], 401);
+            }else{
+                return response()->json(['message' => 'Login failed'], 401);
+            }
         }
-
         return response()->json(['message' => 'Invalid credentials'], 401);
     }
 

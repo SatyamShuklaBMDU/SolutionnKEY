@@ -4,19 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
     public function adduser()
     {
-        $users = User::all();
+        $users = User::where('role','!=','Admin')->get();
         return view('admin.users', compact('users'));
-
     }
     public function alluser()
     {
-        $users = User::all();
+        $users = User::where('role','!=','Admin')->get();
         return view('admin.all_users', compact('users'));
 
     }
@@ -48,7 +48,8 @@ class UserController extends Controller
         ]);
         $start = $request->start;
         $end = $request->end;
-        $users = User::whereDate('created_at', '>=', $start)
+        $users = User::where('role','!=','Admin')
+            ->whereDate('created_at', '>=', $start)
             ->whereDate('created_at', '<=', $end)
             ->orderBy('created_at', 'desc')
             ->get();

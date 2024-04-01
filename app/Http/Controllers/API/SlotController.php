@@ -32,18 +32,17 @@ class SlotController extends Controller
             $date = Carbon::parse($request->input('date'));
             $preferred_time_1 = Carbon::parse($request->input('preferred_time_1'));
             $preferred_time_2 = $request->input('preferred_time_2') ? Carbon::parse($request->input('preferred_time_2')) : null;
-            DB::statement('CALL insert_schedule_slot(?, ?, ?, ?, ?, ?, ?, ?, ?)', [
-                $call_id,
-                $request->input('customer_id'),
-                $request->input('vendor_id'),
-                $request->input('type'),
-                $date->toDateString(),
-                $preferred_time_1->toTimeString(),
-                $preferred_time_2 ? $preferred_time_2->toTimeString() : null,
-                $request->input('communication_mode'),
-                'booked',
+            $slot = ScheduleSlot::create([
+                'call_id' => $call_id,
+                'customer_id' => $request->customer_id,
+                'vendor_id' => $request->vendor_id,
+                'type' => $request->type,
+                'date' => $date,
+                'preferred_time_1' => $preferred_time_1,
+                'preferred_time_2' => $preferred_time_2,
+                'communication_mode' => $request->communication_mode,
+                'status' => 'Booked'
             ]);
-            $slot = ScheduleSlot::where('call_id',$call_id)->first();
             return response()->json(['message' => 'Schedule slot registered successfully', 'data' => $slot], 201);
         } catch (QueryException $e) {
             return response()->json(['error' => 'Error registering schedule slot: ' . $e->getMessage()], 500);

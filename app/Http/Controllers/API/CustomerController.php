@@ -3,13 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Listeners\GenerateReferralCode;
 use App\Models\Customer;
 use App\Models\CustomerDocument;
 use App\Models\CustomerFamily;
 use App\Models\VendorWishlist;
 use Carbon\Carbon;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -111,23 +109,28 @@ class CustomerController extends Controller
     {
         try {
             $request->validate([
-                'email' => 'required|email',
-                'password' => 'required',
+                'phone_number' => 'required|numeric',
+                'pin_no' => 'required|digits:4',
             ]);
-            $credentials = $request->only('email', 'password');
-            if (Auth::guard('customer')->attempt($credentials)) {
-                $customer = Customer::where('email', $request->email)->firstOrFail();
+            $customer = Customer::where('phone_number', $request->phone_number)->first();
+            if ($customer && $this->validatePin($request->pin_no, $customer->pin_no)) {
                 $token = $customer->createToken('CustomerToken')->plainTextToken;
-                return response()->json(['token' => $token], 200);
+                return response()->json(['message'=>'Login Successfully','token' => $token], 200);
             } else {
                 throw ValidationException::withMessages([
-                    'email' => ['The provided credentials are incorrect.'],
+                    'phone_number' => ['The provided credentials are incorrect.'],
                 ]);
             }
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 401);
         }
     }
+
+    private function validatePin($inputPin, $storedPin)
+    {
+        return $inputPin === $storedPin;
+    }
+
     public function logout(Request $request)
     {
         $request->user('customer')->tokens()->delete();

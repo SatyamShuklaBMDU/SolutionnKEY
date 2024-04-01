@@ -25,6 +25,7 @@
             position: relative;
             z-index: 2;
         }
+       
     </style>
 @endsection
 @section('content-area')
@@ -32,8 +33,8 @@
     <section class="main_content dashboard_part">
         <nav aria-label="breadcrumb" class="mb-5">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">User Management</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Add User</li>
+                <li class="breadcrumb-item"><a href="#" style="text-decoration: none;color:#0d9603;font-weight:600;font-size:20px;">User Management</a></li>
+                <li class="breadcrumb-item" aria-current="page" style="text-decoration: none;color:#033496;font-weight:600;font-size:18px;">Add User</li>
             </ol>
         </nav>
         <div class="main_content_iner ">
@@ -43,18 +44,18 @@
                 </div>
             @endif
             <div class="container-fluid">
-                <div class="row dashboard-header" style="background: #e5e5e5;">
-                    <div class="row">
+                <div class="row dashboard-header" style="">
+                    {{--  <div class="row">
                         <div class="main-header">
                             <h3 class="my-2 pl-4">Manage Admins</h3>
                         </div>
-                    </div>
+                    </div>  --}}
                     <div class="col-md-11  mx-auto">
                         <form class="notification-form shadow rounded" action="{{ route('users-store') }}" method="post">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">User Name</label>
-                                <input type="text" name="name" value="{{ old('name') }}" class="form-control"
-                                    id="exampleInputsubject" aria-describedby="textHelp"
+                                <input type="text" name="name" value="{{ old('name') }}" class="form-control" style="font-size: 15px;"
+                                    id="exampleInputsubject"
                                     placeholder="please enter your name">
                                 @if ($errors->has('name'))
                                     <span class="help-block">{{ $errors->first('name') }}</span>
@@ -62,7 +63,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Email</label>
-                                <input type="email" name="email" value="{{ old('email') }}" class="form-control"
+                                <input type="email" name="email" value="{{ old('email') }}" class="form-control" style="font-size: 15px;"
                                     id="exampleInputsubject" aria-describedby="textHelp"
                                     placeholder="Please enter your email">
                                 @if ($errors->has('email'))
@@ -74,7 +75,7 @@
                             @csrf
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Create Password</label>
-                                <input type="password" name="password" class="form-control" id="password-field"
+                                <input type="password" name="password" class="form-control" id="password-field" style="font-size: 15px;"
                                     aria-describedby="textHelp" placeholder="*****">
                                 <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                 @if ($errors->has('password'))
@@ -83,7 +84,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Role</label>
-                                <input type="text" name="role" class="form-control" id="exampleInputsubject"
+                                <input type="text" name="role" class="form-control" id="exampleInputsubject" style="font-size: 15px;"
                                     aria-describedby="textHelp" placeholder="Role">
                                 @if ($errors->has('role'))
                                     <span class="help-block">{{ $errors->first('role') }}</span>
@@ -93,7 +94,7 @@
                             <div class="col-md-12  Modules d-flex justify-content-around">
                                 <div class="form-check" style="">
                                     <input class="form-check-input" type="checkbox" value="all" id="all"
-                                        name="permission[]" checked>
+                                        name="permission[]" >
                                     <label class="form-check-label" for="all">
                                         All User
                                     </label>
@@ -203,7 +204,7 @@
                                     </label>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-dark btn-lg" style="margin:30px 0px 0px;">Assign Roles</button>
+                            <button type="submit" class="btn btn-success btn-lg mt-3" style="transform: translateX(90rem);">Assign Roles</button>
                         </form>
                     </div>
                 </div>

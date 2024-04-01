@@ -46,6 +46,29 @@
         #customerTable_previous {
             transform: translateX(-20px);
         }
+
+         /* For DataTable */
+         #customerTable_wrapper, #customerTable th, #customerTable td {
+            font-size: 15px;
+        }
+
+        /* For datepicker */
+        .ui-datepicker {
+            font-size: 15px;
+        }
+        /* For input placeholder */
+        ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+            font-size: 15px;
+        }
+        ::-moz-placeholder { /* Firefox 19+ */
+            font-size: 15px;
+        }
+        :-ms-input-placeholder { /* IE 10+ */
+            font-size: 15px;
+        }
+        :-moz-placeholder { /* Firefox 18- */
+            font-size: 15px;
+        }
     </style>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
@@ -58,8 +81,8 @@
     <section class="main_content dashboard_part">
         <nav aria-label="breadcrumb" class="mb-5">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Customer Management</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Customer Details</li>
+                <li class="breadcrumb-item"><a href="#" style="text-decoration: none;color:#0d9603 !important;font-weight:600;font-size:20px;">Customer Management</a></li>
+                <li class="breadcrumb-item active" aria-current="page" style="text-decoration: none;color:#033496;font-weight:600;font-size:18px;">Customer Details</li>
             </ol>
         </nav>
         <div class="main_content_iner">
@@ -72,7 +95,7 @@
                                 @include('admin.date')
                                 <div class="col-md-1 text-end" style="margin-left: 10px; margin-top: 47px;">
                                     <a class="btn text-white shadow-lg" href="{{ route('customer-show') }}"
-                                        style="background-color:#033496;">Reset</a>
+                                        style="background-color:#033496;font-size:15px;">Reset</a>
                                 </div>
                             </form>
                         </div>
@@ -115,7 +138,7 @@
                                                     <td>{{ $customers->address }}</td>
                                                     <td>{{ $customers->city }}-{{ $customers->state }}</td>
                                                     <td>
-                                                        <select class="form-select change-status-dropdown" data-customer-id="{{ $customers->id }}">
+                                                        <select class="form-select change-status-dropdown" data-customer-id="{{ $customers->id }}" style="font-size:15px;min-width: 150%;">
                                                             <option value="1" {{ $customers->account_status == 1 ? 'selected' : '' }}>Activate</option>
                                                             <option value="0" {{ $customers->account_status == 0 ? 'selected' : '' }}>Deactivate</option>
                                                         </select>

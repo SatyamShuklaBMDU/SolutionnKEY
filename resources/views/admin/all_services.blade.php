@@ -55,6 +55,29 @@
         #customerTable_previous {
             transform: translateX(-20px);
         }
+
+        /* For DataTable */
+        #customerTable_wrapper, #customerTable th, #customerTable td {
+            font-size: 15px;
+        }
+
+        /* For datepicker */
+        .ui-datepicker {
+            font-size: 15px;
+        }
+        /* For input placeholder */
+        ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+            font-size: 15px;
+        }
+        ::-moz-placeholder { /* Firefox 19+ */
+            font-size: 15px;
+        }
+        :-ms-input-placeholder { /* IE 10+ */
+            font-size: 15px;
+        }
+        :-moz-placeholder { /* Firefox 18- */
+            font-size: 15px;
+        }
     </style>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
@@ -65,8 +88,8 @@
     <section class="main_content dashboard_part">
         <nav aria-label="breadcrumb" class="mb-5">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Services Management</a></li>
-                <li class="breadcrumb-item active" aria-current="page">All Services</li>
+                <li class="breadcrumb-item"><a href="#" style="text-decoration: none;color:#0d9603 !important;font-weight:600;font-size:20px;">Services Management</a></li>
+                <li class="breadcrumb-item active" aria-current="page" style="text-decoration: none;color:#033496 !important;font-weight:600;font-size:18px;">All Services</li>
             </ol>
         </nav>
         @if (session()->has('success'))
@@ -84,11 +107,11 @@
                                 @include('admin.date')
                                 <div class="col-md-1 text-end" style="margin-left: 10px; margin-top: 47px;">
                                     <a class="btn text-white shadow-lg" href="{{ route('service') }}"
-                                        style="background-color:#033496;">Reset</a>
+                                        style="background-color:#033496;font-size:15px;">Reset</a>
                                 </div>
-                                <div class="col-md-1 text-end float-end "  style="margin-right: 30px; margin-top: 47px;">
+                                <div class="col-md-1 text-end float-end "  style="margin-right: 50px; margin-top: 47px;">
                                     <a class="btn text-white shadow-lg" href="{{ route('service-create') }}"
-                                        style="background-color:#0d9603;">Create New Service</a>
+                                        style="background-color:#0d9603;font-size:15px;">Create New Service</a>
                                 </div>
                             </form>
                         </div>
@@ -113,7 +136,7 @@
                                             <tr class="odd" data-user-id="{{ $service->id }}">
                                                 <td class="sorting_1">{{ $loop->iteration }}</td>
                                                 @if ($service->image)
-                                                    <td><img class="rounded" src="{{ asset('storage/' . $service->image) }}"
+                                                    <td><img class="rounded" src="{{ asset($service->image) }}"
                                                             alt="Service Image" style="width: 100px; height: 70px;"></td>
                                                 @else
                                                     <td>
@@ -133,11 +156,17 @@
                                                     @endif
                                                 </td>
                                                 <td class="action">
-                                                    <button type="button" class="btn btn-outline-danger">
+                                                    {{-- <button type="button" class="btn btn-outline-danger">
                                                         <i class="fa fa-trash-o delete-location"
                                                             data-service-id="{{ $service->id }}"
                                                             style="padding-right: -10px;font-size: 17px;"></i>
+                                                    </button> --}}
+                                                    <button type="button" class="btn btn-outline-danger">
+                                                        <i class="fa fa-trash-o delete-location"
+                                                            data-service-id="{{ $service->id }}"
+                                                            style="padding-right: -10px; font-size: 17px;"></i>
                                                     </button>
+                                                    
                                                     <button type="button" class="btn btn-outline-danger">
                                                         <a href="{{ route('services-edit', $service->id) }}">
                                                             <i class="fa fa-pencil"
@@ -186,7 +215,7 @@
                         type: 'DELETE',
                         data: {
                             id: serviceId
-                        },Pe
+                        },
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
@@ -202,7 +231,6 @@
             });
         });
     </script>
-
     <script>
         $(document).ready(function() {
             $('#customerTable').DataTable({

@@ -79,24 +79,18 @@
                     </ul>
                 </li>
             @endif
-            @if (auth()->check() && auth()->user()->hasPermission('customermanagement'))
-                <li class="treeview">
-                    <a class="has-arrow" href="#" aria-expanded="false" style="text-decoration:none;">
-                        <i class="fa fa-users" style="color: #033496;"></i>
-                        <span style="font-size: 14px; color: #033496;font-weight:700">Customer Management</span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="{{ route('customer-show') }}"
-                                style="color: #0d9603;text-decoration:none;font-weight:700;"><span>Customer
-                                    Details</span></a></li>
-                        <li><a href="{{ route('customer-document') }}"
-                                style="color: #0d9603;text-decoration:none;font-weight:700;"><span>Customer
-                                    Documents</span></a></li>
-                        <li><a href="{{ route('customer-family') }}"
-                                style="color: #0d9603;text-decoration:none;font-weight:700;"><span>Customer Family
-                                    Details</span></a></li>
-                    </ul>
-                </li>
+            @if(auth()->check() && auth()->user()->hasPermission('customermanagement'))
+            <li class>
+                <a class="has-arrow" href="#" aria-expanded="false">
+                    <i class="fa fa-users" style="color: #033496;"></i>
+                    <span style="font-size: 13px; color: #033496"><b>Customer Management</b></span>
+                </a>
+                <ul>
+                    <li><a href="{{ route('customer-show') }}"><span style="color: #033496;">Customer Details</span></a></li>
+                    <li><a href="{{ route('customer-document') }}"><span style="color: #033496;">Customer Documents</span></a></li>
+                    <li><a href="{{ route('customer-family') }}"><span style="color: #033496;">Customer Family Details</span></a></li>
+                </ul>
+            </li>
             @endif
             @if (auth()->check() && auth()->user()->hasPermission('booking'))
                 <li class="treeview">

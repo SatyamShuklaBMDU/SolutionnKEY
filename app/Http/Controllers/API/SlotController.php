@@ -48,4 +48,9 @@ class SlotController extends Controller
             return response()->json(['error' => 'Error registering schedule slot: ' . $e->getMessage()], 500);
         }
     }
+
+    public function vendorRegister(Request $request)
+    {
+        
+    }
 }

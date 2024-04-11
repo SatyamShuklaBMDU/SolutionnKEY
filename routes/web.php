@@ -58,11 +58,11 @@ Route::middleware('auth')->group(function () {
         // Route::delete('/delete-customer/{id}', 'CustomerController@deleteCustomer')->name('delete.customer');
 
     });
-    Route::middleware(['auth', 'permission:professionalmanagement'])->group(function () {
+    Route::middleware(['permission:professionalmanagement'])->group(function () {
         Route::get('/vendor/show',[VendorController::class,'show'])->name('vendor-show');
-        Route::post('/change-vendor-account-status', [VendorController::class,'changeAccountStatus'])->name('change.vendor.account.status');
         Route::post('/vendor/filter',[VendorController::class,'filter'])->name('vendor-filter');
     });
+    Route::post('/change-vendor-account-status', [VendorController::class,'changeAccountStatus'])->name('change.vendor.account.status');
     //customer route
     Route::post('/customer/filter',[CustomerController::class,'filter'])->name('customer-filter');
     // FeedBack Route

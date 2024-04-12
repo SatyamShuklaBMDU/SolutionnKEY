@@ -40,7 +40,8 @@ Route::prefix('customer')->group(function () {
     Route::post('/reviews', [ReviewController::class, 'store']);
     Route::post('/feedback', [FeedbackController::class, 'addFeedback']);
     Route::post('/complaint', [FeedbackController::class, 'addComplaint']);
-    Route::post('/schedule_slots/book', [SlotController::class, 'register']);
+    Route::post('/vendor-time-slots', [SlotController::class, 'getVendorTimeSlots']);
+    Route::post('/slots/book', [SlotController::class, 'bookSlot']);
     Route::get('/vendors/filter', [FilterController::class, 'filterVendors']);
 });
 // Vendor Routes
@@ -53,7 +54,7 @@ Route::prefix('vendor')->group(function () {
     Route::post('/posts', [PostController::class, 'store']);
     Route::post('/posts/update', [PostController::class, 'update']);
     Route::post('/blogs/register', [BlogController::class, 'register']);
-    Route::post('/schedule_slots/register', [SlotController::class, 'vendorRegister'])->middleware('auth:sanctum');
+    Route::post('/schedule_slots', [SlotController::class, 'scheduleSlot']);
 });
 Route::prefix('posts')->group(function () {
     Route::post('/comments', [CommentController::class, 'store']);

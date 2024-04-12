@@ -16,6 +16,7 @@ use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -33,6 +34,11 @@ Route::get('/', function () {
     Auth::logout();
     // session()->invalidate();
     return view('auth.login');
+});
+
+Route::get('mi',function(){
+    Artisan::call('migrate --path=database\migrations\2024_04_12_065256_create_slot_scheduling_partners_table.php');
+    return 'done';
 });
 
 Route::get('/dashboard', function () {

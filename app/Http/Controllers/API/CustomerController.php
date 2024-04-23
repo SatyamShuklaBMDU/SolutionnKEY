@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\CustomerDocument;
 use App\Models\CustomerFamily;
+use App\Models\Vendor;
 use App\Models\VendorWishlist;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
@@ -115,7 +116,7 @@ class CustomerController extends Controller
             $customer = Customer::where('phone_number', $request->phone_number)->first();
             if ($customer && $this->validatePin($request->pin_no, $customer->pin_no)) {
                 $token = $customer->createToken('CustomerToken')->plainTextToken;
-                return response()->json(['message'=>'Login Successfully','token' => $token], 200);
+                return response()->json(['message' => 'Login Successfully', 'token' => $token], 200);
             } else {
                 throw ValidationException::withMessages([
                     'phone_number' => ['The provided credentials are incorrect.'],
@@ -232,6 +233,110 @@ class CustomerController extends Controller
             return true;
         } else {
             return false;
+        }
+    }
+
+    public function allvendors(Request $request)
+    {
+        try {
+            $vendors = Vendor::all();
+            $profileUrl = "https://qbacp.com/solutionkey/public";
+            $vendorsArray = $vendors->map(function ($vendor) use ($profileUrl) {
+                return [
+                    'id' => $vendor->id,
+                    'vendor_id' => $vendor->vendor_id,
+                    'name' => $vendor->name,
+                    'highest_qualification' => $vendor->highest_qualification,
+                    'profession' => $vendor->profession,
+                    'area_of_interest' => $vendor->area_of_interest,
+                    'phone_number' => $vendor->phone_number,
+                    'gender' => $vendor->gender,
+                    'email' => $vendor->email,
+                    'password' => $vendor->password,
+                    'experience' => $vendor->experience,
+                    'current_job' => $vendor->current_job,
+                    'charge_per_minute_for_audio_call' => $vendor->charge_per_minute_for_audio_call,
+                    'charge_per_minute_for_video_call' => $vendor->charge_per_minute_for_video_call,
+                    'charge_per_minute_for_chat' => $vendor->charge_per_minute_for_chat,
+                    'adhar_number' => $vendor->adhar_number,
+                    'pancard' => $vendor->pancard,
+                    'about' => $vendor->about,
+                    'city' => $vendor->city,
+                    'state' => $vendor->state,
+                    'address' => $vendor->address,
+                    'status' => $vendor->status,
+                    'profile_picture' => $profileUrl . '/' . $vendor->profile_picture,
+                    'cover_picture' => $profileUrl . '/' . $vendor->cover_picture,
+                    'account_status' => $vendor->account_status,
+                    'deactivated_at' => $vendor->deactivated_at,
+                    'deactivation_remark' => $vendor->deactivation_remark,
+                    'is_verified' => $vendor->is_verified,
+                    'created_at' => $vendor->created_at,
+                    'updated_at' => $vendor->updated_at,
+                    'pin_no' => $vendor->pin_no,
+                ];
+            })->toArray();
+            return response()->json([
+                'status' => 'Success',
+                'vendors' => $vendorsArray,
+                'profile_url' => $profileUrl,
+                'message' => 'Data Successfully',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Something went wrong'], 500);
+        }
+    }
+
+    public function getVendorById(Request $request)
+    {
+        try {
+            $vendor = Vendor::with('posts')->find($request->id);
+            if (!$vendor) {
+                return response()->json(['error' => 'Vendor not found'], 404);
+            }
+            $profileUrl = "https://qbacp.com/solutionkey/public";
+            $posturl = "https://qbacp.com/solutionkey/public/images/posts/";
+            $vendorArray = [
+                'id' => $vendor->id,
+                'vendor_id' => $vendor->vendor_id,
+                'name' => $vendor->name,
+                'highest_qualification' => $vendor->highest_qualification,
+                'profession' => $vendor->profession,
+                'area_of_interest' => $vendor->area_of_interest,
+                'phone_number' => $vendor->phone_number,
+                'gender' => $vendor->gender,
+                'email' => $vendor->email,
+                'password' => $vendor->password,
+                'experience' => $vendor->experience,
+                'current_job' => $vendor->current_job,
+                'charge_per_minute_for_audio_call' => $vendor->charge_per_minute_for_audio_call,
+                'charge_per_minute_for_video_call' => $vendor->charge_per_minute_for_video_call,
+                'charge_per_minute_for_chat' => $vendor->charge_per_minute_for_chat,
+                'adhar_number' => $vendor->adhar_number,
+                'pancard' => $vendor->pancard,
+                'about' => $vendor->about,
+                'city' => $vendor->city,
+                'state' => $vendor->state,
+                'address' => $vendor->address,
+                'profile_picture' => $profileUrl . '/' . $vendor->profile_picture,
+                'cover_picture' => $profileUrl . '/' . $vendor->cover_picture,
+                'account_status' => $vendor->account_status,
+                'created_at' => $vendor->created_at,
+                'updated_at' => $vendor->updated_at,
+                'pin_no' => $vendor->pin_no,
+                'posts' => $vendor->posts->map(function ($post) use ($posturl) {
+                    return [
+                        'id' => $post->id,
+                        'post_image' => $posturl . $post->post_image,
+                        'content' => $post->content,
+                        'created_at' => $post->created_at,
+                        'updated_at' => $post->updated_at,
+                    ];
+                })->toArray(),
+            ];
+            return response()->json(['status' => 'Success', 'message' => 'Data Successfully', 'vendor' => $vendorArray], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Internal Server Error'], 500);
         }
     }
 }

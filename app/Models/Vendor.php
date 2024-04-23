@@ -12,4 +12,8 @@ class Vendor extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens;
     protected $guarded = [];
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }

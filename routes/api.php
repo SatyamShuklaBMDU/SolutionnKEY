@@ -43,6 +43,9 @@ Route::prefix('customer')->group(function () {
     Route::post('/vendor-time-slots', [SlotController::class, 'getVendorTimeSlots']);
     Route::post('/slots/book', [SlotController::class, 'bookSlot']);
     Route::get('/vendors/filter', [FilterController::class, 'filterVendors']);
+    Route::any('/vendors-all', [CustomerController::class, 'allvendors']);
+    Route::any('/get-all-posts', [PostController::class, 'allposts']);
+    Route::post('/specific-vendors-all', [CustomerController::class, 'getVendorById']);
 });
 // Vendor Routes
 Route::prefix('vendor')->group(function () {
@@ -57,7 +60,7 @@ Route::prefix('vendor')->group(function () {
     Route::post('/schedule_slots', [SlotController::class, 'scheduleSlot']);
 });
 Route::prefix('posts')->group(function () {
-    Route::post('/comments', [CommentController::class, 'store']);
-    Route::post('/likes', [LikeController::class, 'store']);
+    Route::post('/comments', [CommentController::class, 'store'])->middleware('auth:sanctum');
+    Route::post('/likes', [LikeController::class, 'store'])->middleware('auth:sanctum');
 });
 

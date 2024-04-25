@@ -13,6 +13,7 @@ use App\Http\Controllers\ReferralController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\RewardCommissionController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\SubServicesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
@@ -37,7 +38,7 @@ Route::get('/', function () {
 });
 
 Route::get('mi',function(){
-    Artisan::call('migrate --path=database\migrations\2024_04_12_065256_create_slot_scheduling_partners_table.php');
+    Artisan::call('migrate --path=database\migrations\2024_04_25_055605_create_sub_services_table.php');
     return 'done';
 });
 
@@ -81,9 +82,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/delete-complaint/{id}', [ComplaintController::class, 'destroy'])->name('delete-complaint');
     //Service Route
     Route::get('/service', [ServiceController::class, 'index'])->name('service');
+    Route::get('/sub-service', [SubServicesController::class, 'index'])->name('sub-service');
+    Route::post('/sub-services', [SubServicesController::class, 'store'])->name('sub-services-store'); 
+    Route::get('/sub-service-create', [SubServicesController::class, 'create'])->name('sub-service-create');
+    Route::get('/get-sub-service/{id}', [SubServicesController::class, 'edit'])->name('get-sub-service');
+    Route::post('/services', [ServiceController::class, 'service_store'])->name('services-store'); 
     Route::post('/services/filter',[ServiceController::class,'filter'])->name('service-filter');
     Route::get('/service-create', [ServiceController::class, 'create'])->name('service-create');
-    Route::post('/services', [ServiceController::class, 'service_store'])->name('services-store'); 
     Route::get('/services-edit/{service}', [ServiceController::class, 'edit'])->name('services-edit');
     Route::put('/services/{service}', [ServiceController::class, 'update'])->name('services-update');
     Route::delete('/delete-service/{id}', [ServiceController::class, 'destroy'])->name('delete-service');

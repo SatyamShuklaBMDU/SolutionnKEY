@@ -60,9 +60,12 @@
                         <li><a href="{{ route('service') }}"
                                 style="color: #0d9603;text-decoration:none;font-weight:700;"><span>All
                                     Services</span></a></li>
-                        <li><a href="{{ route('service-create') }}"
+                        <li><a href="{{ route('sub-service') }}"
+                                style="color: #0d9603;text-decoration:none;font-weight:700;"><span>All
+                                   Sub Services</span></a></li>
+                        {{-- <li><a href="{{ route('service-create') }}"
                                 style="color: #0d9603;text-decoration:none;font-weight:700;"><span>Add
-                                    Services</span></a></li>
+                                    Services</span></a></li> --}}
                     </ul>
                 </li>
             @endif
